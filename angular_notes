@@ -1,8 +1,11 @@
+install angular cli
 > npm install -g @angular/cli
+creaye new project
 > ng new my-first-app
 > cd my-first-app
+start the angular developement server
 > ng serve
-	- to run the develepment server
+	- builds and serves the app.
 
 
  -- code is written in src folder
@@ -12,6 +15,7 @@ src
 		- app.componnets.html
 		- app.components.css
 		- app.module.ts
+		- app.component.ts
 
 app.componnets.html - where v write our page contents
 app.component,.css  - where v write the css
