@@ -1,0 +1,67 @@
+> npm install -g @angular/cli
+> ng new my-first-app
+> cd my-first-app
+> ng serve
+	- to run the develepment server
+
+
+ -- code is written in src folder
+
+src
+	- app
+		- app.componnets.html
+		- app.components.css
+		- app.module.ts
+
+app.componnets.html - where v write our page contents
+app.component,.css  - where v write the css
+app.module.ts - typescript code - importing modles, packages 
+
+Example
+----------------
+app.components.html file
+----------------------------
+<input type="text" [(ngModel)] ="name">
+<p>{{ name }}</p>
+
+here [(ngModel)] - angular property - gets the input and store in name model. later o/p value of name model below. to do it, import module.
+
+app.module.ts
+----------------------------
+import FormsModule from angular forms
+
+import { FormsModule } from "@angular/forms";
+
+-- add the module to imports:
+
+imports: [
+    BrowserModule,
+    FormsModule
+  ]
+
+
+
+usig bootstrap styling
+-----------------------
+> cd ny-first-app
+
+> npm install bootstrap --save
+
+- angular.json file
+	- styles array
+		-overwrite the defaul style
+like this,
+
+	 "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ]
+
+  save the file and run, 
+  > ng serve
+
+ to verify it open developer tools - elements -style tag
+
+
+
+
