@@ -117,3 +117,27 @@ creating servers component with cli
 
 > save :)
 
+
+
+@Component({
+  selector: 'app-servers',
+
+  // below r two diff ways using selectr
+
+  1. by using css attribute selector
+  // selector : '[app-servers]',
+
+  app.components.html
+  ------------------
+  <div app-servers></div>
+
+  2. using css class selector
+  // selector: '.app-servers',
+
+
+  app.components.html
+  ------------------
+  <div class= "app-servers"></div>
+
+
+
