@@ -107,3 +107,13 @@ note:
 never add selectors in the new component to the index.html since it doesnt works.
 
 
+creating servers component with cli
+----------------------------
+> ng generate component servers
+> check whether it is imported and added to declartions array in app.module.ts
+> add html contents to servers.componenets.html file
+> add the servers component selector as html element in app.component.html
+		<app-severs></app-servers>
+
+> save :)
+
