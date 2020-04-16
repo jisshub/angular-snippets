@@ -140,8 +140,6 @@ creating servers component with cli
   <div class= "app-servers"></div>
 
 
-<<<<<<< HEAD
-=======
   Componenet creation manually
   -----------------------------
 
@@ -217,7 +215,6 @@ html template
 
 <!-- here innerText is a dom property used to show 
 content in b/w the tags -->
->>>>>>> refs/remotes/origin/master
   using string interpolation
   --------------------------
   {{ }}
@@ -243,62 +240,6 @@ content in b/w the tags -->
 	here when v click the button the method() is invoked. 
 
 	'click' is the event.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	-- target is a property of input event
