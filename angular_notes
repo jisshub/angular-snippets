@@ -272,5 +272,25 @@ passing data with event binding
 
 
   
+two way binding (combining prpoerty and event binding)
+------------------------
+
+<input type="text" class="form-control"
+[(ngModel)]="serverVersion">
+
+<!-- using variable serverVersion here -->
+<p class="lead mt-2">server version is {{ serverVersion }}</p>
+
+
+ngModel - a directive that binds the user inputs.  and stores it in a variable
+
+[(ngModel)] = "serverVersion"
+
+here 'serverVersion' is a variable that store the user input binded by ngModel
+and that input is binded is by ngModel.
+
+then v can use thias variable in our template. like below:
+	<p>{{ serverVersion }}</p>
+
 
 
