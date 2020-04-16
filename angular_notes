@@ -292,5 +292,9 @@ and that input is binded is by ngModel.
 then v can use thias variable in our template. like below:
 	<p>{{ serverVersion }}</p>
 
+	the user value stored in serverVersion is updated when ever user gives new input.
+	and it reflects everywhere in thepage where v use 'serverVersion' variable
 
+
+	
 
