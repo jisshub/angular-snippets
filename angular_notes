@@ -140,7 +140,6 @@ creating servers component with cli
   <div class= "app-servers"></div>
 
 
-
   using string interpolation
   --------------------------
   {{ }}
@@ -149,12 +148,55 @@ creating servers component with cli
   it can be methods(should return a string/number as output), constants, numbers(converted to strings)
   cant use loops, conditionals, ...
 
-1.{{ data }} -- resulting data 
+1. {{ data }} -- resulting data 
 
-2.{{getValue()}} -- method
+2. {{ getValue() }} -- method
 
 3. {{ "stringvalue" }} -- hardcoded strings
 	
+  
+
+
+	Event Binding
+	---------------
+
+	<button class = "btn btn-primary" (click) = "method()">Add Item</button>
+
+	here when v click the button the method() is invoked. 
+
+	'click' is the event.
+
+
+
+	-- target is a property of input event
+
+		to get the value of input text
+			> event.target.value;
+
+
+passing data with event binding
+--------------------------------------
+
+<label for="server-name" class="font-weight-bold">Server Name: </label><br>
+<input type="text" class="form-control"
+(input) = "OnGetInputData($event)">
+
+<!-- get the input here -->
+<p class="font-weight-bold mt-2">{{ textInput }}</p>
+
+-- (input) = "OnGetInputData($event)
+	
+	here v use input event, $event is variable that accept the input value entered and pass it as argument with the method.
+
+	component.ts
+	-------------
+
+	  OnGetInputData(eventData: any): void{
+    // get the input value
+    this.textInput = eventData.target.value;
+  }
+
+
   
 
 
