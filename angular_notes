@@ -215,3 +215,20 @@ html template
 
 <!-- here innerText is a dom property used to show 
 content in b/w the tags -->
+  using string interpolation
+  --------------------------
+  {{ }}
+
+  anytihing that goes in this curly braces should return a string at end or those that can be convrted to string.
+  it can be methods(should return a string/number as output), constants, numbers(converted to strings)
+  cant use loops, conditionals, ...
+
+1.{{ data }} -- resulting data 
+
+2.{{getValue()}} -- method
+
+3. {{ "stringvalue" }} -- hardcoded strings
+	
+  
+
+
