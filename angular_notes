@@ -140,6 +140,84 @@ creating servers component with cli
   <div class= "app-servers"></div>
 
 
+<<<<<<< HEAD
+=======
+  Componenet creation manually
+  -----------------------------
+
+  > navigate to app folder
+  > mkdir -v componentdir 
+  		if component name is composed of 2 words, eg: successalert
+  		create component name as success-alert
+
+  > cd componentdir
+  > touch componentdir.component.html componentdir.component.css componentdir.component.ts
+  > in componentdir.component.ts, add the following
+
+  	import { Component } from "@angular/core" -- not neccessary to give since it will be imported automatically once v define @Component
+  	
+  	@Component({
+
+  		selector: "app-componentdir",
+  		templateUrl: "./componentdir.component.html",
+  		styleUrls: "[./componentdir.component.css]"
+  	})
+
+  	export class ComponentDirComponent{
+
+  	}
+
+  > app.module.ts
+
+  	import { ComponentDirComponent } from ./componentdir/componentdir.component
+
+  	declarations: [AppComponent, 
+  				   ComponentDirComponent
+  				  ]
+
+  > add some content in html file and style it in css file of new component.
+  > add selector property of new component as html element in app.components.html file like,
+
+  		<selector></selector>
+
+
+
+typescript code
+----------------------
+
+
+export class ServersComponent implements OnInit {
+  newServers: boolean = true;
+  serverInfo: string;
+  usageLimit: string = "start using";
+  constructor() { 
+    setTimeout(()=>{
+      this.newServers = false;
+    } ,2000), 
+    this.serverInfo = "bad server all day",
+    
+    setTimeout(() => this.usageLimit = "stop using it", 5000);
+  };
+
+  ngOnInit(): void {
+  }
+
+}
+
+html template
+-------------------------
+<!-- using property binding -->
+<button class="btn btn-primary mt-3 mb-3" [disabled]="newServers">Add Server</button>
+
+<!-- using string interpolation -->
+<p> {{serverInfo}} </p>
+
+<!-- using property binding for constantly changing data-->
+<p [innerText] = "usageLimit" id="para-1"></p>
+
+<!-- here innerText is a dom property used to show 
+content in b/w the tags -->
+>>>>>>> refs/remotes/origin/master
   using string interpolation
   --------------------------
   {{ }}
@@ -165,6 +243,61 @@ creating servers component with cli
 	here when v click the button the method() is invoked. 
 
 	'click' is the event.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
