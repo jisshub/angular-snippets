@@ -353,3 +353,34 @@ for the paragraph
 <p [ngStyle] = "{backgroundColor: getBgColor()}" 
 class="font-weight-bold mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, dolorum?</p>
 
+passgin multiple properties
+---------------------------------
+[ngStyle] = "{border: '3px solid', backgroundColor: 'dodgerblue'}"
+
+
+
+
+using ngClass directive
+---------------------------------------
+
+<!-- ngClass is a built in attribute that attaches 
+to an element only when a condition is true -->
+
+component.html
+------------------------
+<p class="lead mt-4"
+[ngClass]="{premium_style: classType==='premium'}"
+>This is {{ classType }} class.</p>
+
+<!-- here ngClass binds a js object
+with css class as key and a condition as its value -->
+<!-- if classType property is premium, then v attach css class 'premium_style' to the paragraph element -->
+<!-- else style is not attached -->
+
+component.css
+-------------------
+.premium_style{
+    background-color: dodgerblue;
+}
+
+
