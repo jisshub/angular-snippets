@@ -353,6 +353,15 @@ for the paragraph
 <p [ngStyle] = "{backgroundColor: getBgColor()}" 
 class="font-weight-bold mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, dolorum?</p>
 
+component.ts
+getBgColor(){
+    if (this.randomValue === "online") {
+      return "red";
+    } else {
+      return "green"
+    }
+  }
+  
 passgin multiple properties
 ---------------------------------
 [ngStyle] = "{border: '3px solid', backgroundColor: 'dodgerblue'}"
