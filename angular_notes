@@ -304,3 +304,52 @@ disabled attribute
 	[disabled] = "!variable"
 
 if the variable is not present, so !variable is true, thus element is disabled, else enabled.
+
+
+ngIf directive
+---------------------
+
+-- to remove/add the element based on a condition.
+
+
+Example: 
+
+component.html
+------------------
+<input type="text" class="form-control"
+[(ngModel)] = "textData">
+<button class="btn btn-warning m-2"
+[disabled]='!textData'
+(click)="OnClickBtn()">Add Data</button>
+
+<!-- add p element only if button is clicked -->
+<p *ngIf="value1">Data is {{ textData }}</p>
+<!-- this value1 holds either true/false -->
+<!-- once page reloads p element is removed from dom -->
+<!-- this is what ngIf does - removes/add element based on condition -->
+<!-- button click is the condition here -->
+
+component.ts
+--------------
+class{
+	value1: string;
+
+	OnClickBtn(): void{
+      this.value1= true;
+      // this value1 variable is passed to ngIf
+  }	
+}
+  
+  
+using ngStyle directive
+------------------------
+ngstyle is an attribute directive.
+
+ ngStyle allows to dynamially change styles of an element
+based on condition 
+ here ngStyle is binded with a js object where v specify the styles
+for the paragraph 
+
+<p [ngStyle] = "{backgroundColor: getBgColor()}" 
+class="font-weight-bold mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, dolorum?</p>
+
