@@ -296,5 +296,11 @@ then v can use thias variable in our template. like below:
 	and it reflects everywhere in thepage where v use 'serverVersion' variable
 
 
-	
+disabled attribute
+------------------------
 
+1. property binding
+
+	[disabled] = "!variable"
+
+if the variable is not present, so !variable is true, thus element is disabled, else enabled.
