@@ -360,13 +360,13 @@ passgin multiple properties
 
 
 
-using ngClass directive
+using ngClass directive 
 ---------------------------------------
 
 <!-- ngClass is a built in attribute that attaches 
 to an element only when a condition is true -->
 
-component.html
+server.component.html
 ------------------------
 <p class="lead mt-4"
 [ngClass]="{premium_style: classType==='premium'}"
@@ -377,10 +377,29 @@ with css class as key and a condition as its value -->
 <!-- if classType property is premium, then v attach css class 'premium_style' to the paragraph element -->
 <!-- else style is not attached -->
 
-component.css
+server.component.css
 -------------------
-.premium_style{
+.premium_style{s
     background-color: dodgerblue;
+}
+
+
+using ngFor directive
+--------------------------
+<!-- here serverList is an array -loop thru it - fetch each item
+and output it in the element using string interpolation - if 5 elements in array - 
+then p element will be shown 5 times -->
+
+--here v use for...of loop
+
+server.component.html
+---------------------
+<p *ngFor="let server of serverList" class="text-success mt-3">{{server}}</p>
+
+server.component.ts
+-----------------------
+constructor(){
+	 this.serverList = ["server1", "server2", "server3"];
 }
 
 
