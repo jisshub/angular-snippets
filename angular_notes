@@ -386,11 +386,24 @@ with css class as key and a condition as its value -->
 <!-- if classType property is premium, then v attach css class 'premium_style' to the paragraph element -->
 <!-- else style is not attached -->
 
+
 server.component.css
 -------------------
 .premium_style{s
     background-color: dodgerblue;
 }
+
+Example: 
+----------------
+<p [ngClass]="{'white-text': data>=10}">Hello</p>
+
+here v must use '' if css class use hyphen b/w them.
+
+.white-text{
+	color: "white";
+
+}
+
 
 
 using ngFor directive
@@ -410,5 +423,27 @@ server.component.ts
 constructor(){
 	 this.serverList = ["server1", "server2", "server3"];
 }
+
+toggle button to hide and show element
+-----------------------------------------
+
+<button class="btn btn-primary m-3"
+(click)="OnBtnClick()">Display Details</button>
+<!-- show paragraph only if button is clicked, use ngIf --> 
+<p *ngIf="isShow" class="m-3">Secret Password is {{secretPassword}}</p>
+<!-- if we click button again, paragraph is removed, since ngIf will be false on another click -->
+<br>
+
+class{
+
+	isShow: false
+
+
+  OnBtnClick(): string{
+    // reverse the isShow property on each click
+    this.isShow = !this.isShow;
+    this.secretPassword = "jiss#45@01";
+    return this.secretPassword;
+  }
 
 
