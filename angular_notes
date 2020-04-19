@@ -447,3 +447,23 @@ class{
   }
 
 
+extracting the index of ngFor directive
+---------------------------------------
+ngFor = "let logItem of logs; let i = index"
+
+here index is a reserved word which gives access to index of current
+iteration. 
+
+Example
+--------------
+in first iteration, index is 0,
+in 2nd iteration, index is 1,
+
+component.html
+-------------
+<p *ngFor="let eachClick of clickDataArray; let i = index" 
+[ngStyle]="{backgroundColor: i>=5? 'red':'blue'}"
+></p>
+
+-- here if i>=5, then p gets a bgcolor of red else blue
+
