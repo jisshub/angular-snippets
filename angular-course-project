@@ -1,0 +1,14 @@
+creating components
+-----------------------
+
+shortcut method
+
+> ng g c componentname ---skipTests true
+
+g- generate
+c- component
+---skipTests true : to skip creating .spec.ts file/test file in component folder.
+
+
+
+
