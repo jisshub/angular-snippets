@@ -1,0 +1,20 @@
+app.conponent.html
+--------------------
+
+1. app-header
+	.containe
+		.row
+			.col
+				app-books
+				app-genre
+
+2. create a books model 
+	-- create a books.model.ts file in books component
+
+3. books-list.component.ts
+----------------------------
+import books model class
+- creae a n array of type booksmodel
+- instantiate it in constructor
+
+
