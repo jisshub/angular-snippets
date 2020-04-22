@@ -1,0 +1,102 @@
+server.component.html
+-----------------------
+<div class="card-title">{{ element.name }}</div>
+<div class="card-text">
+  <p>
+    <strong *ngIf="element.type === 'server'" style="color: red">{{ element.content }}</strong>
+    <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
+  </p>
+</div>
+
+server.component.ts
+------------------------------
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-server',
+  templateUrl: './server.component.html',
+  styleUrls: ['./server.component.css']
+})
+export class ServerComponent implements OnInit {
+  // define a element property.
+  element: {name:string, content:string};
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+error
+-------------------
+here this element property is specific for server component only.
+
+app.component.ts
+---------------------
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  serverElements = [{type: "server",
+                    name:"test server",
+                    content: "sample content"}];
+}
+
+
+app.component.html
+---------------------
+<div class="container">
+  <app-cockpit></app-cockpit>
+  <hr>
+  <div class="row">
+    <div class="col-lg-12">
+      <div
+        class="card card-body mb-2"
+        *ngFor="let serverElement of serverElements">
+        <!-- bind element property of server.component.ts and store
+        each server element object -->
+          <app-server [element]="serverElement"></app-server>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+-- we cant access the properties of a component from outside the
+component.
+ie. we cant accesss it from other components.
+
+to make this happen, ie to allowother components o access the property.
+we have to use input deorator before component.
+
+
+
+server.compoenent.ts 
+---------------------------
+export class ServerComponent implements OnInit {
+
+  @Input()
+  element: {type:string, name:string, content:string};
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+  // attach a input decorator to the element property-
+  // will make it available outside this component
+  
+  // <!-- so any component accessing the element property will be 
+  // able to use this element property of ServerComponent class-->
+
+
+
+
+
+
