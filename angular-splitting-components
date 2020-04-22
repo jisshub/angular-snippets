@@ -1,3 +1,6 @@
+splittinh applicaton to diff compoenent
+----------------------------------------
+
 server.component.html
 -----------------------
 <div class="card-title">{{ element.name }}</div>
@@ -89,14 +92,23 @@ export class ServerComponent implements OnInit {
 
 }
 
-  // attach a input decorator to the element property-
-  // will make it available outside this component
+// attach a input decorator to the element property-
+// will make it available outside this component
+
+// <!-- so any component accessing the element property will be 
+// able to use this element property of ServerComponent class-->
+
   
-  // <!-- so any component accessing the element property will be 
-  // able to use this element property of ServerComponent class-->
 
+Assigning an alias to custom properties
+-------------------------------------------
+if some changes happen in our child component and now want to inform 
+that change to our parent component.
 
+ie. we have to inform our app component when new server is created.
 
+to do that,
 
-
-
+app.component.html
+---------------------
+<app>
