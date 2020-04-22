@@ -109,6 +109,96 @@ ie. we have to inform our app component when new server is created.
 
 to do that,
 
+app.component.ts
+------------------
+add two functoin to be executed afetr button click
+
+  OnServerAdded(){
+      this.serverElements.push({
+      type: 'server',
+      name: this.newServerName,
+      content: this.newServerContent
+    });
+  }
+  OnBluePrintAdded(){
+      this.serverElements.push({
+      type: 'server',
+      name: this.newServerName,
+      content: this.newServerContent
+    });
+  }
+
+ here serverName and serverContent properties r not available in app component,
+we have to pass both that from cockpit component to app component.
+the appcomponent also manages the serverArrays so have to pass both to app component.
+
+to do that
+
+
+
 app.component.html
 ---------------------
-<app>
+<app-cockpit (serverCreated)="OnServerAdded($event)"></app-cockpit>
+
+so here v have to assign a custom event to app-cockpit which invokes
+OnServerAdded() that defined in app component once event occurs. the function also gets an object as argument.
+that object containes properties such as server name and content.
+
+
+app.componet.ts
+-----------------------
+-- here serverData parameter is a type object with serverName and serverContent as its properties.
+
+-- noe we can access this properties and assign it to name and content.
+
+  OnServerAdded(serverData: {serverName: string, serverContent: string}){
+      this.serverElements.push({
+      type: 'server',
+      name: serverData.serverName,
+      content: serverData.serverContent
+    });
+  }
+
+
+-> replicate this method for blurprintAdded()
+
+APP.COMPONE.HTML
+----------
+<app-cockpit 
+  (serverCreated)="OnServerAdded($event)"
+  (bluePrintCreated)="OnBluePrintAdded($event)">
+</app-cockpit>
+
+
+APP.COMPONENT.TS
+--------------------
+  OnBluePrintAdded(blueprintData: {serverName: string, serverContent: string}){
+      this.serverElements.push({
+      type: 'server',
+      name: blueprintData.serverName,
+      content: blueprintData.serverContent
+    });
+  }
+
+ next we have to put our custom events in cockpit.component.ts
+ ------------------------------------------------
+ here v have to create two propwerties(serverCreated, bluePrintCreated) which are events,
+
+ export class CockpitComponent implements OnInit {
+ 	-- make this an event by usng built in EvetntEmiiter class.
+    serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+    -- here v pass () at end to call constructor of EventEmiiter and then create eventemitter object.
+
+  newServerName = '';
+  newServerContent = '';
+  constructor() { }
+}
+
+
+
+
+
+
+
+
+
