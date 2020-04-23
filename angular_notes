@@ -469,6 +469,32 @@ component.html
 
 -- here if i>=5, then p gets a bgcolor of red else blue
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 common error on template
 ---------------------------
 <form name="covidForm">
@@ -480,4 +506,5 @@ common error on template
 </div>
 
  <!-- always use name attribute for all inputs awhile using forms else angular throws errors-->
+
 
