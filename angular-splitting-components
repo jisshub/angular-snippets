@@ -180,14 +180,26 @@ APP.COMPONENT.TS
     });
   }
 
+
+
+Binding to custom evnets
+---------------------
  next we have to put our custom events in cockpit.component.ts
  ------------------------------------------------
- here v have to create two propwerties(serverCreated, bluePrintCreated) which are events,
+ here v have to create two propwerties(serverCreated, bluePrintCreated) which are event emitters,
 
  export class CockpitComponent implements OnInit {
  	-- make this an event by usng built in EvetntEmiiter class.
-    serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+	-- use @Ouput() before each event emitter, since v r outputting this events to our app component.
+
+    @Output() serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+    @Output() bluePrintCreated = new EventEmitter<{serverName: string, serverContent:string}>();
+
+	-- specify type of data to be passed while object creation
     -- here v pass () at end to call constructor of EventEmiiter and then create eventemitter object.
+
+	 // these eventemitters are objects in angular which allows to emit our 
+  // own custom events
 
   newServerName = '';
   newServerContent = '';
@@ -195,9 +207,34 @@ APP.COMPONENT.TS
 }
 
 
+cockpit.component.ts
+---------------------
+onAddServer() {
+    // emits a  serverCreated event with an object as its arguments
+    this.serverCreated.emit({
+      serverName: this.newServerName, 
+      serverContent: this.newServerContent
+    });
+  }
+
+  onAddBlueprint() {
+    // emits a blueprintcreted event with an object as it arguments
+    this.bluePrintCreated.emit({
+      serverName: this.newServerName, 
+      serverContent: this.newServerContent
+    })
+  }
 
 
 
+assigning an alias to custom events
+-------------------------------------
+// we can even assign alias to our custom event.
+  
+@Output('bpCreated') bluePrintCreated = new EventEmitter<{serverName: string, serverContent:string}>();
+
+and use this alias insted of event emiiter in app component
+s 
 
 
 
