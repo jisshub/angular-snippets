@@ -1,0 +1,24 @@
+npm install bootstrap --save
+
+copy bootstrap relative path to styles
+
+app.component.html
+----------------------
+.container
+	.row
+		.col-sm-12
+			.form-group
+			input.number.form-control [(ngModel)] = "getInp"
+			.form-group
+			input.number.form-control [(ngModel)] = "getInp2"
+			input.number.form-control [(ngModel)] = "getInp3"
+			input.number.form-control [(ngModel)] = "getInp4"
+			.form-group
+			button (click) = "onAddData()"
+
+
+app.component.ts
+-------------------------
+
+
+
