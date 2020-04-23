@@ -21,7 +21,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./server.component.css']
 })
 export class ServerComponent implements OnInit {
-  // define a element property.
+  // define a custom property called serverElement.
   element: {name:string, content:string};
   constructor() { }
 
@@ -102,12 +102,24 @@ export class ServerComponent implements OnInit {
 
 Assigning an alias to custom properties
 -------------------------------------------
+ @Input('myElement') element: {type:string, name:string, content:string};
+
+ here 'myElement' is the alias for the element property.
+
+
+
+
+
+
+
+-----------------------
 if some changes happen in our child component and now want to inform 
 that change to our parent component.
 
 ie. we have to inform our app component when new server is created.
 
 to do that,
+
 
 app.component.ts
 ------------------
