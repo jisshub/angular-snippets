@@ -8,6 +8,17 @@ start the angular developement server
 	- builds and serves the app.
 
 
+
+common error while installing and creating new angular project
+--------------------
+NPM Install Error:Unexpected end of JSON input while parsing near '…nt-webpack-plugin“:”0'
+
+solution:
+> npm cache clean --force
+
+
+
+
  -- code is written in src folder
 
 src
@@ -468,6 +479,87 @@ component.html
 ></p>
 
 -- here if i>=5, then p gets a bgcolor of red else blue
+
+
+
+using local reference to element instead of two way binding
+-------------------------------------------------------------
+here v set a local reference to html element,
+
+syntax:
+	#localreference 
+
+<input type="text" name="user" #userName>
+
+here userName acts as a reference to this input element
+we can use this reference in template but not in ts code directly,
+
+we can pass it as argument while funciton call,
+eg:
+(click)="OnBtnClick(userName)"
+
+
+in ts code,
+
+	OnBtnClick(getUserName: HTMLInputElement){
+
+		// we can get the value of element we refered using value attribute
+		console.log(getUserName.value)
+	}
+
+getUserName is of type HTMLInputElement.
+
+
+
+@ViewChild() in Angular 8+
+----------------------------
+In Angular 8+, the @ViewChild() syntax which you'll see in the next lecture needs to be changed slightly:
+
+Instead of:
+
+@ViewChild('serverContentInput') serverContentInput: ElementRef;
+use
+ 
+@ViewChild('serverContentInput', {static: true}) serverContentInput: ElementRef;
+The same change (add { static: true } as a second argument) needs to be applied to ALL usages of @ViewChild() (and also @ContentChild() which you'll learn about later) IF you plan on accessing the selected element inside of ngOnInit().
+
+If you DON'T access the selected element in ngOnInit (but anywhere else in your component), set static: false instead!
+
+If you're using Angular 9, you only need to add { static: true } (if needed) but not { static: false }.
+
+
+in practice,
+
+@viewChild used to get access to any element firectly from ts code.
+
+
+@viewchild('selector', {static: true}): ElementRef
+
+@ViewChild - built in decorator
+selector - will be a local reference set on element v trying to access
+{static: true} - enthutanaavo
+ElementRef: type 
+
+Example
+--------------
+cockpit.component.ts
+-----------------------
+class Component{
+
+	@ViewChild("serverDate", {static: true}) serverDateInput: ElementRef;
+
+}
+
+to get the value of element v are accessing,
+
+function()(
+
+	console.log(this.serverDateInput.nativeElement.value)
+)
+
+
+
+
 
 
 
