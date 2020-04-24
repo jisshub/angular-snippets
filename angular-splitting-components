@@ -234,7 +234,7 @@ assigning an alias to custom events
 @Output('bpCreated') bluePrintCreated = new EventEmitter<{serverName: string, serverContent:string}>();
 
 and use this alias insted of event emiiter in app component
-s 
+ 
 
 
 
