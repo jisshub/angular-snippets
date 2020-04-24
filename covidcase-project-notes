@@ -1,0 +1,58 @@
+using custmom propoerty 
+-----------------------------
+- create a covid19case component,
+
+covid19case.component.html
+---------------------------
+<td>{{ covidCase.country }}</td>
+<td>{{ covidCase.confirmed }}</td>
+<td>{{ covidCase.active }}</td>
+<td>{{ covidCase.deaths }}</td>
+<td>{{ covidCase.recovered }}</td>
+
+app.component.html
+--------------------
+ <tbody>
+          <!-- loop thru each object in the array -->
+          <tr *ngFor="let covidCase of covidCases">
+            <!-- get each object properties -->
+            <!-- here goes the td -->
+            <!-- property binding on cases property of covid19cases component
+            and covidCase object is binded to cases property. -->
+            <app-covid19-cases [cases]="covidCase"></app-covid19-cases>
+          </tr>        
+        </tbody>
+
+
+covid19case.component.ts
+--------------------------- 
+export class Covid19CasesComponent implements OnInit {
+
+  // attach an inout decorator to make our custom poperty avaiable to app component.
+  // assign a aliases called cases which is later used in appcomponent template
+  @Input('cases') covidCase: {country: string ,confirmed: number, active: number, deaths: number, recovered: number}
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+app.component.ts
+-----------------
+export class AppComponent {
+  title = 'covid-data-app';
+  // define appcomponent properties
+
+  covidCases = [];
+  countryName: string = '';
+  confirmedCases: number = null;
+  activeCases: number = null;
+  deathReports: number = null;
+  recoveries: number = null;
+  btnValue: boolean = false;
+
+}
+
+s

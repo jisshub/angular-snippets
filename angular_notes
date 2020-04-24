@@ -39,6 +39,8 @@ app.components.html file
 <input type="text" [(ngModel)] ="name">
 <p>{{ name }}</p>
 
+[(ngModel)] is used for two way binding in Angular
+
 here [(ngModel)] - angular property - gets the input and store in name model. later o/p value of name model below. to do it, import module.
 
 app.module.ts
@@ -560,5 +562,41 @@ function()(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+common error on template
+---------------------------
+<form name="covidForm">
+	<div class="form-group">
+	  <label for="country">Country</label>
+	 
+	  <input type="text" class="form-control" name="countryName"
+	  [(ngModel)]="countryName">
+</div>
+
+ <!-- always use name attribute for all inputs awhile using forms else angular throws errors-->
 
 
