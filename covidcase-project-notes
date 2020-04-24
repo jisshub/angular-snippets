@@ -188,17 +188,17 @@ export class AppComponent {
   btnValue: boolean = false;
 
   // methd to pass data
-  OnAfterSubmit(covidData: {countryName: string ,confirmedCases: number, activeCases: number, deathReports: number, recoveries: number}){
+  OnAfterSubmit(covidData: {country: string ,confirmed: number, active: number, deaths: number, recovered: number}){
     
     // set btnVlue to true to make ngIf as true then only div element shows
     this.btnValue = true;
   // push the properties to array as key-value pairs
     this.covidCases.push({
-      country: covidData.countryName,
-      confirmed: covidData.confirmedCases,
-      active: covidData.activeCases,
-      deaths: covidData.deathReports,
-      recovered: covidData.recoveries
+      country: covidData.country,
+      confirmed: covidData.confirmed,
+      active: covidData.active,
+      deaths: covidData.deaths,
+      recovered: covidData.recovered
     })
 
   }
@@ -209,3 +209,93 @@ app.compoenent.html
   <!-- cockpit component -->
   <!-- pass custom events and a method to be called when event occurs. the method gets data emited by event as an argument -->
   <app-cockpit (covidEmitter)="OnAfterSubmit($event)"></app-cockpit>
+
+
+using localreference instead of two way binding.
+----------------------------------------------------
+cockpit.component.html
+---------------------
+
+ <!-- use local reference to refer to this element element -->
+  <input type="text" class="form-control" name="countryName"
+  #countryName>
+
+
+-- pass the local  reference as argument here,
+
+<button class="btn btn-primary" [disabled]="OnCheck(countryName)" (click)="OnSubmitCovid(countryName)">Submit Data</button>
+
+cockpit.compoenent.ts
+-------------------
+    // get countryName local reference passed as argument here
+    OnSubmitCovid(getCountryName: HTMLInputElement){
+    
+      
+  // here v emit the data to app component
+      this.covidEmitter.emit({
+
+        // get country value using value attribute
+
+        country: getCountryName.value,
+        confirmed: this.confirmedCases,
+        active: this.activeCases,
+        deaths: this.deathReports,
+        recovered: this.recoveries
+      })
+
+      // clear inputs once submitted
+      getCountryName.value = '';
+      this.confirmedCases = null;
+      this.activeCases = null;
+      this.deathReports = null;
+      this.recoveries = null;
+}
+
+
+use @viewchild to access the element from ts code
+------------------------------------------------
+
+cockpit.cmponenrt.ts
+----------------------
+class Component{
+
+	  @ViewChild("activeCases", {static:true}) activeCasesInput: ElementRef;
+
+}
+
+ OnSubmitCovid(getCountryName: HTMLInputElement, getConfirmedCases: HTMLInputElement){
+    
+      
+  // here v emit the data to app component
+      this.covidEmitter.emit({
+        // get country value
+        country: getCountryName.value,
+        confirmed: getConfirmedCases.value,
+        // use nativeElement.value attrbitute on property to get input value
+        active: this.activeCasesInput.nativeElement.value,
+        deaths: this.deathReports,
+        recovered: this.recoveries
+      })
+
+      // clear inputs once submitted
+      getCountryName.value = '';
+      getConfirmedCases.value = null;
+      this.activeCasesInput.nativeElement.value = null;
+      this.deathReports = null;
+      this.recoveries = null;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
