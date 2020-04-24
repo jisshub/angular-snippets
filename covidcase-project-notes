@@ -55,4 +55,157 @@ export class AppComponent {
 
 }
 
-s
+cockpit.component.html
+-------------------
+<div class="row">
+    <div class="col-sm-12">
+      <h3 class="text-primary mt-3">Covid DataBase</h3>
+      <form name="covidForm">
+        <div class="form-group">
+          <label for="country">Country</label>
+          <!-- always ue name attribute while using forms esle error throw-->
+          <input type="text" class="form-control" name="countryName"
+          [(ngModel)]="countryName">
+        </div>
+        <div class="form-group">
+          <label for="confirmed">Confirmed</label>
+          <input type="number" name="confirmed" class="form-control"
+          [(ngModel)]="confirmedCases">
+        </div>
+        <div class="form-group">
+          <label for="active">Active</label>
+          <input type="number" name="active" class="form-control"
+          [(ngModel)]="activeCases">
+        </div>
+        <div class="form-group">
+          <label for="deaths">Deaths</label>
+          <input type="number" name="deaths" class="form-control"
+          [(ngModel)]="deathReports">
+        </div>
+        <div class="form-group">
+          <label for="recovered">Recovered</label>
+          <input type="number" name="recovered" class="form-control"
+          [(ngModel)]="recoveries">
+        </div>
+        <div class="form-group">
+          <!-- disable button at page load, enable on button click -->
+          <!-- if OnCheck() returns false then make it enable, else diable button -->
+          <button class="btn btn-primary" [disabled]="OnCheck()" (click)="OnSubmitCovid()">Submit Data</button>
+          <!-- a click event to clear all inputs - disable property is set to make button disable/not   -->
+          <button class="btn btn-primary ml-3" (click)="OnClearForm()" [disabled]="OnDisableBtn()">Clear</button>
+        </div>
+      </form>
+        
+    </div>
+  </div>
+  
+cockpit.component.ts
+----------------------
+
+export class CockpitComponent implements OnInit {
+  countryName: string = '';
+  confirmedCases: number = null;
+  activeCases: number = null;
+  deathReports: number = null;
+  recoveries: number = null;
+  btnValue: boolean = false;
+
+  // create an event emitter object to output the data to app component
+  @Output() covidEmitter = new EventEmitter<{country: string ,confirmed: number, active: number, deaths: number, recovered: number}>()
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+    // methd to pass data
+    OnSubmitCovid(){
+      this.btnValue = true;
+      
+  // here v emit the data as object to app component
+      this.covidEmitter.emit({
+        country: this.countryName,
+        confirmed: this.confirmedCases,
+        active: this.activeCases,
+        deaths: this.deathReports,
+        recovered: this.recoveries
+      })
+          // clear all inputs once btn is clicked
+    this.countryName = '';
+    this.confirmedCases = null;
+    this.activeCases = null;
+    this.deathReports = null;
+    this.recoveries = null;
+
+  }
+  // clear form inputs on button click
+  OnClearForm(){
+      this.countryName = '';
+      this.confirmedCases = null;
+      this.activeCases = null;
+      this.deathReports = null;
+      this.recoveries = null;
+  }
+  // disable submit button based on whether all inputs rae given or not
+  OnCheck(){
+    if ((this.countryName!== '')&&
+        (this.confirmedCases!==null) &&
+        (this.activeCases !== null) && 
+        (this.deathReports !== null) && 
+        (this.recoveries!==null)){
+        return false;
+    } else {
+        return true;
+    }
+  }
+
+  // disable clear button is no input is given.
+  // here check whether value provided in any of the inputs
+  // if yes disable set to false, or disable set to true.
+  OnDisableBtn(){
+    if ((this.countryName!=='') ||
+        (this.confirmedCases!== null) ||
+        (this.activeCases!==null) ||
+        (this.deathReports!==null) ||
+        (this.recoveries !== null)) {
+          return false
+    } else {
+          return true;
+    }
+  }
+
+}
+
+
+app.component.ts
+------------------
+export class AppComponent {
+  title = 'covid-data-app';
+  // define appcomponent properties
+
+  covidCases = [];
+
+  btnValue: boolean = false;
+
+  // methd to pass data
+  OnAfterSubmit(covidData: {countryName: string ,confirmedCases: number, activeCases: number, deathReports: number, recoveries: number}){
+    
+    // set btnVlue to true to make ngIf as true then only div element shows
+    this.btnValue = true;
+  // push the properties to array as key-value pairs
+    this.covidCases.push({
+      country: covidData.countryName,
+      confirmed: covidData.confirmedCases,
+      active: covidData.activeCases,
+      deaths: covidData.deathReports,
+      recovered: covidData.recoveries
+    })
+
+  }
+}
+
+app.compoenent.html
+--------------------
+  <!-- cockpit component -->
+  <!-- pass custom events and a method to be called when event occurs. the method gets data emited by event as an argument -->
+  <app-cockpit (covidEmitter)="OnAfterSubmit($event)"></app-cockpit>
