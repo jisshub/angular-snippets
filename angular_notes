@@ -557,6 +557,36 @@ function()(
 	console.log(this.serverDateInput.nativeElement.value)
 )
 
+using ng-content directive
+---------------------------
+
+server.component.html
+------------------------
+<div class="card-title">{{ element.name }}</div>
+<div class="card-text">
+  <ng-content></ng-content>
+</div>
+
+app.component.html
+---------------
+
+<app-server [myElement]="serverElement">
+            <p>
+              <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
+              <br>
+              <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.date }}</strong>
+          
+              <em *ngIf="serverElement.type === 'blueprint'" style="color: blue">{{ serverElement.content }}</em>
+              <br>
+              <em *ngIf="serverElement.type === 'blueprint'" style="color: blue">{{ serverElement.date }}</em>
+            </p>
+ </app-server>
+
+here all the content between app-server tags in appcomponent  is projected to the ng-content
+tags placed in the server cmponent.
+
+ie we are projecting the contents of parent component(app component) into the child component(server component)
+by placing ng-content directive.
 
 
 
