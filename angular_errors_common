@@ -1,0 +1,15 @@
+
+common error on template
+---------------------------
+<form name="covidForm">
+	<div class="form-group">
+	  <label for="country">Country</label>
+	 
+	  <input type="text" class="form-control" name="countryName"
+	  [(ngModel)]="countryName">
+</div>
+
+ <!-- always use name attribute for all inputs awhile using forms else angular throws errors-->
+ 
+ 
+ 
