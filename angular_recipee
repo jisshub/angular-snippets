@@ -96,12 +96,47 @@ recipee-item.omponent.htl
 </a>
 
 
+> adding ingredients to the shoping list
+--------------------------------
+
+
+shoppping-list-edit.compoenent.html
+---------------------------
+       <button type="button" class="btn btn-success m-2" (click)="onAddIngredients(nameInput, amountInput)">Add</button>
 
 
 
+shoppin.list-edt.ts
+-------------------
+ @Output() ingredients = new EventEmitter<{name: string, amount: string}>()
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+  onAddIngredients(getIngName: HTMLInputElement, getIngAmount: HTMLInputElement){
+      this.ingredients.emit({
+        name: getIngName.value,
+        amount: getIngAmount.value
+      })
+  }
 
 
-      	
-      
-   
+  shopping-list.html
+  -----------------
+          <app-shopping-list-edit (ingredients)="onIngData($event)"></app-shopping-list-edit>
 
+
+shoping-list,.ts
+--------------------
+export class ShoppingListComponent implements OnInit {
+  
+    // create an ingredients array of type Ingredient class
+    ingredients: Ingredient[]=[]
+    constructor() {}
+
+  ngOnInit(): void {}
+  onIngData(getEmittedData: {name: string, amount: string}){
+    this.ingredients.push(new Ingredient(getEmittedData.name, getEmittedData.amount))
+  }
+
+}
