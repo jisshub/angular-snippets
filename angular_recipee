@@ -1,0 +1,107 @@
+adding navigation with venet binding and ngif
+------------------------------------------
+
+heaer.compoenent.html
+-------------------
+
+-- set a click event on eah nav and pass a string value to both
+
+<li class="nav-item">
+                        <a class="nav-link" href="#" (click)="OnSelect('recipee')">Recipees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" (click)="OnSelect('shoppingList')">Shopping List</a>
+                    </li>
+         
+         
+ 
+header.component.ts
+------------------------
+export class HeaderComponent {
+
+    // emit an event to the app component. thus make it listenable to app component
+    @Output() featureSelected = new EventEmitter<string>();
+    // so here when v claick a link it emits an event
+    OnSelect(feature: string){
+        this.featureSelected.emit(feature);
+    }
+    
+}
+
+
+app.component.ts
+----------------
+export class AppComponent {
+  title = 'shop-recipee-app';
+  // set a feature initially while page loads,
+  loadedFeature: string = "recipee";
+
+  // define method that got the event data. this data is emtted by our header component
+  OnEmitter(feature: string){
+    this.loadedFeature = feature;
+    
+  }
+
+}
+
+
+app.component.html
+--------------
+
+<!-- use ngIf to display content based on while clicking the navigations -->
+      <app-recipees *ngIf="loadedFeature==='recipee'"></app-recipees>      
+      <app-shopping-list *ngIf="loadedFeature === 'shoppingList'"></app-shopping-list>
+      
+    
+
+
+  passing recipee data from outside with property binfding,
+  -------------------------------------
+  recipee-book.compoenent.html
+  ------------------
+
+     <app-recipee-item *ngFor="let recipee of recipeeList" [recipeeEl]="recipee"></app-recipee-item>
+
+     here v vbind eah recipee to recipeeEl property by property binding
+
+  recipee-item.component.ts
+  -----------------------
+
+export class RecipeeItemComponent{
+
+  // get the input data passed from recipee-book component
+  @Input() recipeeEl: Recipee;
+
+}
+
+  here get the data binded to recipeeEl property from touside
+
+
+
+recipee-item.omponent.htl
+-----------------------
+<a href="#" class="list-group-item clearfix">
+    <!-- to put the content left of the list item -->
+    <div class="float-left">
+        <!-- give recipee name and its description -->
+        <!-- access each property sepcified in models.ts from array of objects  -->
+        <h4 class="list-group-item-heading">{{recipeeEl.name}}</h4>
+        <p class="list-group-item-text">{{recipeeEl.description}}</p>
+    </div>
+    <div class="float-right"> 
+        <!-- recipee image -->
+        <!-- use property binding on src attribute of  -->
+        <img [src]="recipeeEl.imagePath" [alt]="recipeeEl.name" class="img-fluid"style="max-height: 50px;">
+    </div>
+</a>
+
+
+
+
+
+
+
+      	
+      
+   
+

@@ -1,0 +1,52 @@
+making event accessible outisde the component
+----------------------------
+
+game-control.ts
+------
+  // attach Input decorator to make it accessible outside the component
+  @Input('startGame') start: number;
+  
+app.component.html
+----------------
+<div class="container mt-2">
+    <!-- here v bind gameStart property in app component to startGame property -->
+    <app-game-control [startGame]="gameStart" ></app-game-control>
+</div>
+
+app.compoment.ts
+-----------------
+gameStart: number=0;
+
+
+@Output, EventEmitter - to make event listenable outside the component
+-------------------------
+gamr-control.ts
+-------------------
+  @Output() gameEmitter = new EventEmitter<number>();
+
+  OnStartGame(){
+    this.checkValue = true
+    this.intervalId= setInterval(()=> {
+    // here v emit the data to app component in each sec.
+      this.gameEmitter.emit(this.start);
+      this.start++;
+    }, 1000)}
+    
+  app.component.html
+  ------------
+      <app-game-control [startGame]="gameStart" 
+    (gameEmitter)="OnEmitTheGame($event)"></app-game-control>
+
+
+    <!-- attach the gameEmitter event and pass a function to it that gets the event data -->
+    <!-- $event gets the event data which is number here -->
+    
+    app.component.ts
+    -------------------------
+      OnEmitTheGame(eventData: number){
+    console.log(eventData);
+  }
+  
+    
+    
+    

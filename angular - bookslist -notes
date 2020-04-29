@@ -1,0 +1,10 @@
+create an event emitter to emit the data as object to appcomponent on click event.
+in app components view, specif this emitter event and assign a function to it. which
+gets the emitted data from the eventEmitter.  
+in app component code, define the above function and get the data in a parameter of type object.
+later push this each object to an array declared in app component code.
+to list each data on another component, use ngFor directive on that components selector.
+and also pass each object data to a property using property biniding, 
+in components code - define that property using  @Input decorator.
+
+
