@@ -145,16 +145,49 @@ book-list.ts
 
   book.component.html
   -------------------
-          <app-book-list (emitToBooks)="onBookWasSelected($event)"></app-book-list>
+          > store event data in a property. 
+          <app-book-list (emitToBooks)="selectedBook = $event"></app-book-list>
 
 
 book.vomponent.ts
 -------------
+declare above property here, type is BookModel
+  selectedBook: BookModel;
 
-  // define event method here:
-  onBookWasSelected(getData: BookModel){
 
-  }
+books.componet.html
+--------------------
+> bind selectedBook property
+<app-book-details [bookProperty]="selectedBook"> </app-book-details>
+
+
+book-details-component.ts
+-----------------------------
+get the property here. use @Input
+
+@Input bookProperty: BookModel;
+
+
+book-details-component.html
+------------------------
+-- access bookModel properties using dot notation on bookProperty. 
+
+<div class="row">
+    <div class="col-xs-12">
+        <img [src]="bookProperty.bookImage" alt="{{bookProperty.bookName}}"
+        style="max-width: 300px;">
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h1>{{bookProperty.bookName}}</h1>
+    </div>
+</div>
+
+
+
+
+
 
 
 
