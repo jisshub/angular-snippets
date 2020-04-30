@@ -1,0 +1,160 @@
+passing book data with property binding
+------------------------------
+book-item.html
+------------
+<a href="#" class="list-group-item clearfix" *ngFor="let book of bookArr" (click)="onBookData()">
+    <div class="float-left">
+        <h4 class="list-group-item-heading">{{book.bookName}}</h4>
+        <p class="list-group-item-text">{{book.bookAuthor}}</p>
+        <p class="list-group-item-text">{{'total pages:'}} {{book.bookPages}}</p>
+        <p class="list-group-item-text">{{book.bookDescription}}</p>
+
+    </div>
+    <div class="float-right">
+        <img [src]="book.bookImage" [alt]="book.bookName" class="img-fluid rounded"
+        style="max-height: 150px;">
+    </div>    
+</a>            
+
+> later cut the ngFor from <a> tag - paste it in booklist.html
+---------------------------
+booklist.component.html
+----------------
+<div class="row mt-4">
+    <div class="col-md-12">
+        <button class="btn btn-success">New Book</button>
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-xs-12">
+        <!-- give ngFor here thus create above link for each books v loop thru -->
+       <app-book-item *ngFor="let eachBook of bookArr"></app-book-item>
+    </div>
+</div>
+
+
+Now the issue is v dont have access to book in book-item.
+so get book from bookModel using @Input in book-item.ts
+
+book-item.component.ts
+---------------
+import { Component, OnInit, Input } from '@angular/core';
+import {BookModel} from "../../books.model"
+
+@Component({
+  selector: 'app-book-item',
+  templateUrl: './book-item.component.html',
+  styleUrls: ['./book-item.component.css']
+})
+export class BookItemComponent implements OnInit {
+
+  
+  @Input() book: BookModel;
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+  onBookData(){
+
+  }
+
+}
+
+book-list.component.html
+-----------------------
+<!-- here bind eachBook object to book property defined above using property binding -->
+
+<app-book-item *ngFor="let eachBook of bookArr" [book]="eachBook"></app-book-item> 
+
+
+
+
+Next, when clicking on a link we emit an event that informs out parent component a book is selected.
+
+book-item.tml
+0-------------
+   <a href="#" class="list-group-item clearfix" (click)="onBookSelected()">
+            <div class="float-left">
+                <h4 class="list-group-item-heading">{{book.bookName}}</h4>
+                <p class="list-group-item-text">{{book.bookAuthor}}</p>
+                <p class="list-group-item-text">{{'total pages:'}} {{book.bookPages}}</p>
+                <p class="list-group-item-text">{{book.bookDescription}}</p>
+
+            </div>
+            <div class="float-right">
+                <img [src]="book.bookImage" [alt]="book.bookName" class="img-fluid rounded"
+                style="max-height: 150px;">
+            </div>    
+        </a>   
+
+  when clcking on this link get information to its parent vomponent
+  books dthat a book is sleected.
+
+ - frist add a click listener to the link
+ - add that event method in its ts file.
+ - here v emit out event to the parent component book-ilist.
+ -  
+
+ book-item.ts
+ -----------
+ export class BookItemComponent implements OnInit {
+
+  // just emit an event to inform parent an event happens, no data to be passed
+  @Output() bookOut = new EventEmitter<void>()
+  @Input() book: BookModel;
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+  onBookSelected(){
+    // emit here
+    this.bookOut.emit();
+  }
+}
+
+
+
+ book-list.html
+ ----------------
+    <app-book-item *ngFor="let eachBook of bookArr" [book]="eachBook" (bookOut)="OnBookIsSelected()"></app-book-item>
+
+
+book-list.ts
+------------------
+  // get book of BookModel type
+  OnBookIsSelected(getEachBook: BookModel){
+    
+	}
+
+
+
+> later emit an event to book-list parent compoenent ie books compoenent.
+
+book-list.ts
+-----------
+	  @Output() emitToBooks = new EventEmitter<BookModel>()
+
+  OnBookIsSelected(getEachBook: BookModel){
+    // here emit the BookModel type data
+      this.emitToBooks.emit(getEachBook);
+  }
+
+
+  book.component.html
+  -------------------
+          <app-book-list (emitToBooks)="onBookWasSelected($event)"></app-book-list>
+
+
+book.vomponent.ts
+-------------
+
+  // define event method here:
+  onBookWasSelected(getData: BookModel){
+
+  }
+
+
+
