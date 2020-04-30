@@ -1,0 +1,27 @@
+
+app.component.html
+----------
+<div class="container m-3">
+  <div class="row">
+    <div class="col-md-2 mt-5 ml-5">
+      <button class="btn btn-primary" (click)="onGetResults()">get results</button>
+    </div>
+    <!-- display this element only if display is true -->
+    <div class="col-md-4" *ngIf="display">
+      <ul class="list-group" *ngFor="let eachStud of studentList">
+        <li class="list-group-item" [ngStyle]="{'color': onTextCol(), backgroundColor: 'dodgerblue'}" [ngClass]="{align: eachStud.name==='jissmon'}">{{eachStud.name}}({{eachStud.marks}})</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+app.component.css
+----------------
+.align{
+    text-align: center;
+}
+
+
+note:   cant use structural directive like 'ngIf' and 'ngFor' on same element,
+		but can do the same for attribute directive like 'ngStyle' and 'ngClass'
