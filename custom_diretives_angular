@@ -101,4 +101,35 @@ Other renderer2 methods
     this.renderer.removeClass(e, "para-1");
 
 
-    
+
+
+HostListener Directive
+-------------------------
+
+> to make the dom elements more dynamic based on user events
+> here v set styles basedon two mouse vents
+
+  // hostlistener to change background of element when v hover over mouse
+  @HostListener('mouseenter') MouseEnter(eventData: Event){
+    this.renderer.setStyle(this.elementRef.nativeElement
+      , 'background-color', 'blue'); 
+  }
+
+  // hostlistener to change background of element when v leave the mouse
+  @HostListener("mouseleave") MouseLeave(eventData: Event){
+    this.renderer.setStyle(this.elementRef.nativeElement, "background-color", "transparent")
+  }
+
+> here mouseenter and mouseleave mouse events in dom.
+> when v trigegr any of two events, corresponding method is executed whihv gets 
+> thE EVENT DATA PASSED. of type Event
+> and based on this, v set the style for the element.
+
+
+syntax:
+	@HostListener('event') function(eventdata: Event){
+		//code
+	}
+
+
+	
