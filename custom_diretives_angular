@@ -1,0 +1,51 @@
+> creating a custom directive in angular
+
+$ ng generate directive directivename
+			or
+ 	ng g d exampletwo
+
+exampletwo.direcive.ts
+-----------------------
+import { Directive } from '@angular/core';
+
+@Directive({
+  selector: '[appExampletwo]'
+})
+export class ExampletwoDirective {
+
+  constructor() { }
+
+}
+
+
+add the selector to a dom element to get
+refernbce to it.
+
+app.component.html
+-------------------
+
+<button class="btn btn-primary" appExampletwo></button>
+
+here v set the reference to button.
+
+now we can style the button by using ElementRef attribute.
+
+examletwo.drective.ts
+-------------------
+export class ExampletwoDirective implements OnInit {
+
+  constructor(private elRef: ElementRef) {}
+    
+  ngOnInit(){
+     this.elRef.nativeElement.style.width= "600px";
+
+  }
+}
+
+select the underlying elmeent of elementref and change its style here.
+
+
+
+
+
+
