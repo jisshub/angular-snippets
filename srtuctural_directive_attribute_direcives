@@ -1,4 +1,3 @@
-
 app.component.html
 ----------
 <div class="container m-3">
@@ -25,4 +24,7 @@ app.component.css
 structural direcives(ngIf, ngFor) begins with * 
 attribute directives(ngStyle, ngClass) r enclosed in [].
 note:   cant use structural directive like 'ngIf' and 'ngFor' on same element,
-		but can do the same for attribute directive like 'ngStyle' and 'ngClass'
+		    but can do the same for attribute directive like 'ngStyle' and 'ngClass'
+
+
+
