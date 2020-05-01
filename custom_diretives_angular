@@ -46,6 +46,59 @@ select the underlying elmeent of elementref and change its style here.
 
 
 
+In above method, v assign the style to the element directly using style attribute. it is not good practoce.
+
+in angular v dont use dom attributes like this.
+instead use a class called Renderer2 to render the dom elements.
+
+Example:
+------------
+
+// import Renderer2 from core
+import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
+
+@Directive({
+  selector: '[appBetterHighlight]'
+})
+export class BetterHighlightDirective implements OnInit{
+	
+  // create a renderer property of type Renderer2
+  constructor(private elementRef: ElementRef, private renderer: Renderer2 ) { }
+  
+  ngOnInit(){
+
+    const e = this.elementRef.nativeElement
+    // use renderer to set style for the selected element.
+    // get setStyle() method for this.
+    this.renderer.setStyle(e, "background-color", "blue");
+    this.renderer.setStyle(e, 'border', '5px solid green');
+    this.renderer.setStyle(e, "padding", '2rem');
+  }
+  
+}
+
+// syntax
+// this.renderer.setStyle(element selected, property, value)
+
+// so here v use Renderer2 to do rendering.
+
+
+app.component.html
+--------------
+ <p appBetterHighlight>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium aut, accusantium temporibus ipsam laborum et odio dolor voluptates ullam hic numquam soluta tenetur minima optio aspernatur animi, veritatis commodi repudiandae.</p>
+
+ -- use appBetterHighlight selector to refer to the element.
 
 
 
+
+Other renderer2 methods
+---------------
+ // removeStyle() to remove a style from element
+    this.renderer.removeStyle(e, "font-weight");
+
+    // remove Class() of selected element,
+    this.renderer.removeClass(e, "para-1");
+
+
+    
