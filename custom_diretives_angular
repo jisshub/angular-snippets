@@ -174,3 +174,71 @@ app.component.html
 
 
 
+
+using custom propety binding om hostlistener and hostbinding
+----------------------------------------------------
+
+
+>here v set a style directly from view and use input directive to
+acces them from view and apply those on hostlistener.
+
+
+@Directive({
+  selector: '[appCutstomPropertyBinding]'
+})
+export class CutstomPropertyBindingDirective implements OnInit{
+
+  // set two input properties that gets a color from app component view
+  @Input() defaultColor: string;
+  @Input() highlightBg: string;
+
+  constructor() { }
+  ngOnInit(){}
+
+  // hostbinding on background of element
+  @HostBinding('style.backgroundColor') bgColor: string;
+  
+  // while mouseenter execute function
+  @HostListener('mouseenter') mouseFunc(eventData: Event){
+    // set background color to a color received to defaultColor
+    this.bgColor = this.defaultColor;
+  }
+  @HostListener('mouseleave') mouseNewFunc(eventData: Event){
+    // set background color to a color received to highlightBg
+    this.bgColor = this.highlightBg;
+  }
+}
+
+
+app.component.html
+-------------------
+ <p appCutstomPropertyBinding [defaultColor]="'red'" 
+       [highlightBg]="'green'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur dolore atque laborum perferendis tempora rem corporis amet provident optio, voluptate delectus aspernatur assumenda harum praesentium, deleniti sit deserunt porro molestiae?</p>
+
+ defaultColor and highlightBg are the input proeprties v declared in ts file.
+v assign two string values to it.
+
+note: while assigning such use '' around it else it angular detect it as a 
+property and causses errors.
+
+> we can also do property binding without using [] enclosed on selected properties
+
+eg:
+	can use defaultColor="yellow" instead of [defaultColor]="'yellow'"
+
+eg2:
+	defaultBorder="2px solid yellow"
+			or
+
+	[defaultBorder]="'2px solid yellow'"
+
+
+both having same effect on page.
+
+
+
+building custom structural directive
+----------------------------------
+
+
+
