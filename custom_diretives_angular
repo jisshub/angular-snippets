@@ -103,7 +103,7 @@ Other renderer2 methods
 
 
 
-HostListener Directive
+HostListener Decorator
 -------------------------
 
 > to make the dom elements more dynamic based on user events
@@ -132,4 +132,45 @@ syntax:
 	}
 
 
-	
+
+HostBinding Decorator
+--------------------
+
+
+
+> Host Binding,
+> no need to set an element reference, set the directive on dom element.
+> syntax:
+> @HostBinding('property to change') propertyname: type;
+
+
+@Directive({
+  selector: '[appAppHostBinding]'
+})
+
+  @HostBinding('style.backgroundColor') elementBg: string;
+  @HostBinding('style.padding') elementPd: string;
+  @HostBinding('textContent') elementText: string = "put some value here";
+
+  @HostListener('mouseenter') mouseFunc(getEvData: Event){
+    // use hostbinding property to change the background color and padding while mouse hover.
+      this.elementBg = "dodgerblue";
+      this.elementPd = "2rem";
+      this.elementText = "Hello World!"
+  } 
+  @HostListener("mouseleave") mouseFuncN(getEvData: Event){
+    // same goes here while leave mouse - change bg and padding
+      this.elementBg ="transparent";
+      this.elementPd = "1rem";
+      this.elementText = "Welcome to Programming!"
+  }
+
+
+app.component.html
+--------------------------
+ <p appAppHostBinding style="border: 3px solid grey;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, veritatis.</p>
+
+> the above changes r applied on this selected element while v mouse hover and mouse leave.
+
+
+
