@@ -140,7 +140,7 @@ HostBinding Decorator
 
 > Host Binding,
 > no need to set an element reference, set the directive on dom element.
-> syntax:
+> syntax:	
 > @HostBinding('property to change') propertyname: type;
 
 
@@ -196,7 +196,8 @@ export class CutstomPropertyBindingDirective implements OnInit{
   ngOnInit(){}
 
   // hostbinding on background of element
-  @HostBinding('style.backgroundColor') bgColor: string;
+  // can also set a initial bg color when page loads
+  @HostBinding('style.backgroundColor') bgColor: string ="transparent";
   
   // while mouseenter execute function
   @HostListener('mouseenter') mouseFunc(eventData: Event){
@@ -239,6 +240,74 @@ both having same effect on page.
 
 building custom structural directive
 ----------------------------------
+
+create a directive file
+---------------------
+
+unless.directive.ts
+-----------------
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appUnless]'
+})
+
+export class UnlessDirective {
+  // get a condition as input- when codition change
+  // we execute a method - gives a setter before
+  // unless property usng set keyword.
+  
+  @Input() set appUnless(condition: boolean){
+    if (condition) {
+      // if condition true - attach a referenced template to vcRef
+      this.vcRef.createEmbeddedView(this.templateRef);
+    } else {
+      // clear all views in vcRef.
+      this.vcRef.clear()
+    }
+  }
+
+  // pass propertie templateRef, viewcontainer ref
+  constructor(private templateRef: TemplateRef<any>,
+              private vcRef: ViewContainerRef) { 
+
+              }
+
+}
+
+TemplateRef: to get reference to a template
+ViewContainerRef: where v render the template.
+
+
+> here input property name and selector should be same. ie appUnless
+
+app.component.ts
+--------------
+export class AppComponent {
+  title = 'directives-app';
+  dummyData: boolean = true;
+}
+
+give a dummyData ot type boolean
+
+
+app.compomenet.html
+---------------
+<div class="row" *appUnless="dummyData">
+    <h4>Building Custom Structural Directive</h4>
+    <div class="col-md-12">
+      <p style="border: 2px solid green;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur quos sint facilis, molestiae ipsum nobis illo aliquid, beatae deleniti harum, odit incidunt hic esse optio rerum repudiandae aperiam! Nam, ratione!</p>
+    </div>
+  </div>
+
+
+ here appUnless custom struvutal directive recieves a dummyData value 
+ which is set as true.
+
+ and this data is received as inpout to property appUnless in unless.directive.ts
+ and if true - template is rendered. else template is cleared.
+
+
 
 
 
