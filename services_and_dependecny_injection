@@ -1,0 +1,40 @@
+logging services
+-------------
+
+a service to log the data
+
+> app
+	> logging.service.ts
+
+// create a serice class
+// no need of @service decorator -since service is a typescript class
+export class LoggingService{
+    func(status: string){
+        console.log(`A service status changed, new status: ${status}`);
+    }
+}
+
+
+Accesing abve service
+-------------
+NEW-ACCOUNT-COMPOnent.ts
+----------------------
+
+import { LoggingService } from "../logging.service";
+
+  onCreateAccount(accountName: string, accountStatus: string) {
+    this.accountAdded.emit({
+      name: accountName,
+      status: accountStatus
+    });
+    const obj = new LoggingService();
+    obj.func(accountStatus);
+  }
+
+ the abovemethod will work but dont access services like this
+ by creating an object.
+
+ Angular provide a better way to do the above.
+
+ 
+

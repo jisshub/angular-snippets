@@ -141,7 +141,7 @@ HostBinding Decorator
 > Host Binding,
 > no need to set an element reference, set the directive on dom element.
 > syntax:	
-> @HostBinding('property to change') propertyname: type;
+> @HostBinding('property two change') propertyname: type;
 
 
 @Directive({
@@ -309,5 +309,36 @@ app.compomenet.html
 
 
 
+
+ngSwitch
+---------
+
+a built in structual directive
+
+app.component.ts
+-------------
+value: number = 10;
+
+if change this value quite sometimes, we have to show content based on that.
+
+app.compoenent.html
+--------------------
+<div class="row" [ngSwitch]="value">
+    <div class="col-md-12">
+      <!-- one of the below paragraph is shown based on ngSwitchCase -->
+      <p *ngSwitchCase="10">Value is 10</p>
+      <p *ngSwitchCase="20">Value is 20</p>
+      <p *ngSwitchCase="50">Value is 50</p>
+      <p *ngSwicthDefault>Value is default</p>
+    </div>
+  </div>
+
+
+ here v bind the value property to ngSwitch.
+if value matches with below ngSwicthCase value then the corresponding 
+paragraphi s shown.
+
+
+-- ngSwicth is no used much compared tp ngIf.
 
 
