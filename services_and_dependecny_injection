@@ -36,5 +36,31 @@ import { LoggingService } from "../logging.service";
 
  Angular provide a better way to do the above.
 
- 
+using deependecy injection
+------------------------
+component depends on logginservices because component used to call method in loggingservices.
+
+dependency injection injects an instance of loggingserves class to 
+component automaticaly.
+
+here compoenent inform angular that itrequeres an instancr of logginsevices classs.
+
+component.ts
+-----------
+constructor(private logServices: LogginServices){}
+
+>logServices is of type class 
+
+>next gives providers to provide the
+>insstance.
+> pass class type to providers
+provides: [LoggingServices]
+
+>later acceess the method in LoggingServices class
+
+this.logServices.func(status);
+
+
+> this howinject a service to a component automatically
+
 
