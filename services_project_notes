@@ -102,7 +102,79 @@ export class AccountsListComponent implements OnInit {
 
 }
 
+accounts=list.component.html
+-----------------
+<div class="row mt-3">
+    <div class="col-md-8">
+        <div class="border p-4">
+            <p class="font-weight-bold">{{service.name}}</p>
+            <p>This account is {{service.status}}</p>
+            <hr>         
+            <button class="mr-3 btn btn-success" (click)="onSetStatus('active')">Set to 'Active'</button>
+            <button class="btn btn-success" (click)="onSetStatus('inactive')">Set to 'Inactive'</button>
+            <button class="ml-3 btn btn-success" (click)="onSetStatus('unknown')">Set to 'Unknown'</button>
+
+        </div>
+    </div>
+</div>
 
 
 
+accunt.list.compoenent.ts
+------------------------------
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-accounts-list',
+  templateUrl: './accounts-list.component.html',
+  styleUrls: ['./accounts-list.component.css']
+})
+export class AccountsListComponent implements OnInit {
+
+
+  @Input() service: {name: string, status: string};
+
+  // input a number to app component
+  @Input() id: number;
+
+  // emit an event to app component
+  @Output() statusChanged = new EventEmitter<{id: number, newStatus: string}>()
+  constructor() { }
+
+  ngOnInit(): void {}
+  
+  // emit an event while button click
+  onSetStatus(status: string){
+      this.statusChanged.emit({id: this.id, newStatus: status})
+  }
+}
+
+app.compoennt.html
+--------------------
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <app-accounts (serviceEmitter)="onEmitService($event)"></app-accounts>
+      <hr>
+    </div>
+  </div>
+
+  <app-accounts-list 
+  *ngFor="let eachService of servicesArray; let i = index" 
+  [service]="eachService"
+  [id] = "i" 
+  (statusChanged)="onStatusChanged($event)">
+  </app-accounts-list>
+
+</div>
+
+
+aap.component.ts
+----------------
+  // change the status of the given id. change status based on id of object.
+  onStatusChanged(updateStatus: {id: number, newStatus: string}){
+      this.servicesArray[updateStatus.id].status = updateStatus.newStatus;
+  }
+
+  
 
