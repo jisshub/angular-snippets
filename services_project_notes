@@ -1,0 +1,108 @@
+accounts.component.html
+---------------------
+<div class="form-group">
+    <label for="name" class="font-weight-bold">Account Name</label>
+    <input type="text" name="name" id="name" class="form-control" #accountName>
+</div>
+<div class="form-group">
+    <label for="status" class="font-weight-bold">Status</label>
+    <select class="form-control" id="status" #accountStatus>
+        <option>Active</option>
+        <option>Inactive</option>
+        <option>Hidden</option>
+      </select>
+</div>
+<div class="form-group">
+    <button class="btn btn-primary" (click)="onSubmitAcc()">Add Account</button>
+</div>
+
+
+accounts.component.ts
+------------------
+import { Component, OnInit, ViewChild, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-accounts',
+  templateUrl: './accounts.component.html',
+  styleUrls: ['./accounts.component.css']
+})
+export class AccountsComponent implements OnInit {
+
+  // get the input field data
+
+  @ViewChild('accountName', {static: true}) accountName: ElementRef;
+  @ViewChild('accountStatus', {static: true}) accountStatus: ElementRef;
+
+  @Output() serviceEmitter = new EventEmitter<{name: string, status: string}>()
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+  onSubmitAcc(){
+    this.serviceEmitter.emit({name: this.accountName.nativeElement.value, status: this.accountStatus.nativeElement.value})
+  }
+}
+
+
+app.component.html
+-------------------
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <app-accounts (serviceEmitter)="onEmitService($event)"></app-accounts>
+      <hr>
+    </div>
+  </div>
+  <app-accounts-list *ngFor="let eachService of servicesArray" [service]="eachService"></app-accounts-list>
+</div>
+
+
+app.component.ts
+-------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'services-app';
+
+  servicesArray = [];
+
+  onEmitService(eventData: {name: string, status: string}){
+    this.servicesArray.push(
+      {name: eventData.name, status: eventData.status}
+    ) 
+  console.log(this.servicesArray);
+
+  }
+}
+
+accounts-list.ts
+------------------
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-accounts-list',
+  templateUrl: './accounts-list.component.html',
+  styleUrls: ['./accounts-list.component.css']
+})
+export class AccountsListComponent implements OnInit {
+
+
+  @Input() service: {name: string, status: string};
+  constructor() { }
+
+  ngOnInit(): void {  
+  }
+
+}
+
+
+
+
+
