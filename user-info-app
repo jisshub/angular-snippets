@@ -1,0 +1,143 @@
+add-user.compoememt.html
+------------------
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="firstName">FirstName</label>
+            <input type="text" name="firstName" id="firstName"
+            class="form-control" #firstName>
+        </div>
+        <div class="form-group">
+            <label for="lastName">LastName</label>
+            <input type="text" name="lastName" id="lastName"
+            class="form-control" #lastName>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="number" name="phone" id="phone"
+            class="form-control" #phoneNumber>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" (click)="onSubmit()">Add User</button>
+        </div>
+    </div>
+</div>
+
+add-user.ts
+---------------
+import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css']
+})
+export class AddUserComponent implements OnInit {
+
+  @ViewChild('firstName' , {static: true}) first_name: ElementRef;
+  @ViewChild('lastName', {static: true}) last_name: ElementRef;
+  @ViewChild('phoneNumber', {static: true}) phone_number: ElementRef;
+  @Output() emitUser = new EventEmitter<{firstName: string, lastName: string, phone: string}>()
+
+  constructor() { }
+
+  ngOnInit(): void {
+  } 
+
+  onSubmit(){
+    this.emitUser.emit({
+      firstName: this.first_name.nativeElement.value,
+      lastName: this.last_name.nativeElement.value,
+      phone: this.phone_number.nativeElement.value
+    })
+  
+  }
+
+}
+
+app.compoememt.html
+------------
+<div class="container">
+  <app-add-user (emitUser)="onGetUser($event)"></app-add-user>
+
+  <div class="row">
+    <div class="col-md-4">
+      <table class="table table-stripped">
+        <tr>
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">UserName</th>
+            </thead>
+        </tr>
+        <tbody>
+          <app-show-users 
+          *ngFor="let userOne of allUsersArr; let i=index;" 
+          [eachUser]="userOne"
+          [num]="i+1"></app-show-users>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+app.compoennt.ts
+-----------------
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'user-info-app';
+  // 
+  allUsersArr: Array<{firstName: string, lastName: string, phone: string}>=[];
+
+  onGetUser(fetchUser: {firstName: string,  lastName: string, phone: string}){
+    this.allUsersArr.push({
+      firstName: fetchUser.firstName,
+      lastName: fetchUser.lastName,
+      phone: fetchUser.phone
+    })
+    console.log(this.allUsersArr);
+  }
+}
+
+show-user.compoennt.ts
+----------------
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-show-users',
+  templateUrl: './show-users.component.html',
+  styleUrls: ['./show-users.component.css']
+})
+export class ShowUsersComponent implements OnInit {
+
+  @Input() num: number;
+  @Input() eachUser: {firstName: string, lastName: string, phone: string}
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+show-user,html
+=---------------
+<tr>
+    <th scope="row">{{num}}</th>
+    <td>{{eachUser.firstName}}</td>
+    <td>{{eachUser.lastName}}</td>
+    <td>{{eachUser.phone}}</td>
+</tr>
+    
+
+    
