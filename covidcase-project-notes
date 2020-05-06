@@ -112,7 +112,7 @@ export class CockpitComponent implements OnInit {
 
   // create an event emitter object to output the data to app component
   @Output() covidEmitter = new EventEmitter<{country: string ,confirmed: number, active: number, deaths: number, recovered: number}>()
-
+ Array<{getName: string, getStatus: string}>=[]
   constructor() { }
 
   ngOnInit(): void {

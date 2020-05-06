@@ -176,5 +176,5 @@ aap.component.ts
       this.servicesArray[updateStatus.id].status = updateStatus.newStatus;
   }
 
-  
+  	
 

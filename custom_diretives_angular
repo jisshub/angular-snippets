@@ -142,7 +142,7 @@ HostBinding Decorator
 > no need to set an element reference, set the directive on dom element.
 > syntax:	
 > @HostBinding('property two change') propertyname: type;
-
+ 
 
 @Directive({
   selector: '[appAppHostBinding]'
