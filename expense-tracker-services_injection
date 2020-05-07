@@ -1,0 +1,153 @@
+expense.serves.ts
+------------------
+export class ExpenseService{
+    // define an array of type object
+    expenseList: Array<{description: string, date: string, amount: string}>
+
+    // push an object to the array
+    addExpenses(description: string, date: string, amount: string){ 
+        this.expenseList.push({
+            description: description,
+            date: date,
+            amount: amount
+        })
+    }
+}
+
+
+
+app.component.ts
+-----------------
+remove/comment the method 
+
+export class AppComponent {
+  title = 'expense-tracker-app';
+
+  expenseList: {description: string, date: string, amount: string}[] = [];
+
+  // onFetchExpense(accessData: {description: string, date: string, amount: string} ){
+  //     this.expenseList.push({
+  //       description: accessData.description,
+  //       date: accessData.date,
+  //       amount: accessData.amount
+  //     })
+  //   console.log(this.expenseList);    
+  // }
+  
+}
+
+app.component.ts
+--------------------
+
+
+> inject the ExpenseServices instance to the appcomponent
+
+import { Component } from '@angular/core';
+import { ExpenseService } from './expense.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  // provide the instance of ExpenseService 
+  providers: [ExpenseService],
+})
+export class AppComponent {
+  title = 'expense-tracker-app';
+
+  // define a constructor to let angular v need an instance of ExoenseServices
+  constructor(private xpenseService: ExpenseService){}
+
+  expenseList: {description: string, date: string, amount: string}[] = [];
+
+  // onFetchExpense(accessData: {description: string, date: string, amount: string} ){
+  //     this.expenseList.push({
+  //       description: accessData.description,
+  //       date: accessData.date,
+  //       amount: accessData.amount
+  //     })
+  //   console.log(this.expenseList);    
+  // }
+  
+}
+
+
+app.component.ts
+----------------
+
+ // define ngOnInit() life cycle hook,
+  
+  ngOnInit(){
+  
+    // access the array defined in services.ts using constructor parameter
+    // assign it to expenseList defined in the app component
+  
+    this.expenseList=this.xpenseService.expenseList
+  }
+  
+
+expense-data.compoenent.ts
+------------------------
+remove EventEmiiter object - output decorator
+
+> here get the same instance of service injected on app compoenent
+
+constructor(private xpenseService: ExpenseService) { }
+
+no need to use providers property since it causes the instance to be overwritten 
+by creatinf new instance of ExpenseService .
+
+
+> remove the emit method and previius code from onSubmit(), and add the following
+
+  onSubmit(){
+
+    // invoke the addExpense() - pass the arguments as string.
+    // here v pass of each inputs.
+    this.xpenseService.addExpenses(this.getDesc.nativeElement.value, 
+                                   this.getDate.nativeElement.value,
+                                   this.getAmount.nativeElement.value);
+
+    // this.throwExpenses.emit({description: this.getDesc.nativeElement.value, date: this.getDate.nativeElement.value, amount: this.getAmount.nativeElement.value});
+  }
+
+
+so here while click event invoke the addExpense() and pass arguments.
+
+
+expnse-data.component.html
+--------------
+<div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" #expenseDesc>
+</div>
+<div class="form-group">
+    <label for="date">Date</label>
+    <input type="date" class="form-control" #expenseDate>
+</div>
+<div class="form-group">
+    <label for="amount">Amount</label>
+    <input type="number" class="form-control" #expenseAmount>
+</div>
+<div class="form-group">
+    <button class="btn btn-danger btn-block" (click)="onSubmit()">Add Expense</button>
+</div>
+
+
+
+> note: dont forget to remove the event binding from app-expense-data selector in app.component.html
+
+app.compoenent.html
+-------------------------
+before:
+
+<app-expense-data (throwExpenses)="onFetchExpense($event)"></app-expense-data>
+
+after: 
+
+<app-expense-data></app-expense-data>
+
+
+
+
+
