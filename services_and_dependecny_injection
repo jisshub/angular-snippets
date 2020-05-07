@@ -51,10 +51,11 @@ constructor(private logServices: LogginServices){}
 
 >logServices is of type class 
 
->next gives providers to provide the
+>next gives providers property in @Component({}) to provide the
 >insstance.
 > pass class type to providers
-provides: [LoggingServices]
+
+providers: [LoggingServices]
 
 >later acceess the method in LoggingServices class
 
