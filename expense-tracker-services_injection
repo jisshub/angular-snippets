@@ -2,7 +2,7 @@ expense.serves.ts
 ------------------
 export class ExpenseService{
     // define an array of type object
-    expenseList: Array<{description: string, date: string, amount: string}>
+    expenseList: Array<{description: string, date: string, amount: string}>[]=[];
 
     // push an object to the array
     addExpenses(description: string, date: string, amount: string){ 
