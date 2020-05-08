@@ -1,0 +1,32 @@
+
+Appmodule.ts
+----------
+
+provide both the AccountService, loggingServices to the
+providers property.
+
+providers: [AccountService, LoggingServices],
+
+so now the instanc of theses aviable whole applicarion.
+
+and remove theses services from component 'providers
+
+@injectable()
+---------------
+
+always add @injectable() decorator to the services. (good practice)
+
+@injectable is added when v inject a service to another service
+
+Example
+-------
+
+consider service1 and service2. 
+want to inject service2 -> service1
+
+so here v should add @injectable() to the service1 since 
+it is the service where v inject service2.
+
+
+
+

@@ -1,0 +1,65 @@
+lets say on our account srvice we want to provide 
+some events which will trigger in one component and 
+listen in another component.
+
+to do that, add an EventEmitter in accouts.srevies.ts,
+
+
+> statusUpdated = new EventEmitter<string>();
+
+accountts-list-component.ts
+---------------------
+
+// here v invoke the event emitetr object and emit status 
+
+
+import { Component, OnInit, Input} from '@angular/core';
+import { AccountService } from '../accounts.services'
+
+@Component({
+  selector: 'app-accounts-list',
+  templateUrl: './accounts-list.component.html',
+  styleUrls: ['./accounts-list.component.css']
+})
+export class AccountsListComponent implements OnInit {
+
+  @Input() service: {name: string, status: string};
+
+  // input a number to app component
+  @Input() id: number;
+
+  constructor(private accountService :AccountService) {
+      
+   }
+
+  ngOnInit(): void {}
+  
+  // change status
+  onSetStatus(status: string){
+  
+      this.accountService.onStatusChanged(this.id, status)
+
+
+    // call emit() on statusUpdated and pass the status as argument.
+    this.accountService.statusUpdated.emit(status);
+
+   
+  }
+}
+
+
+accounts.compoenent.ts
+---------------------
+
+
+here v listen to emited data in constructor using subscribe() method- 
+get status - alert it.
+
+ constructor(private getService: LoggingServices, private accountService: AccountService) {
+       // listen the status emited by account-list-component.ts
+       this.accountService.statusUpdated.subscribe((status: string) => alert(`status is changed to ${status}`))
+   }
+
+
+
+
