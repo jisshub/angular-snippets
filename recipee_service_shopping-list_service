@@ -222,3 +222,129 @@ export class ShoppingListEditComponent implements OnInit {
 }
 
 
+Adding Ingredient to recipees
+-----------------------
+
+recipee.model.ts
+-------------------
+import Ingredient model here
+
+add ingredients property here,
+
+public ingredient: Ingredient[]
+
+pass imgredient in constructor,
+
+constructor(ingredient: Ingredient[]){
+	this.ingredient = ingredient;
+}
+
+
+later in recipee.service.ts  add ingredients to array,
+
+recipee.serice.ts
+-----------------------
+private recipeeList: Recipee[] = [
+        // instantiate Recipee class - pass arguments
+        new Recipee("a test recipee for all", "a delicious recipee for all", 
+        "https://www.andiemitchell.com/wp-content/uploads/2011/01/baked-buffalo-chicken-rolls-1-680x477.jpg", [new Ingredient("sdasd", '23213'), new Ingredient("asdsad", "2432")]),
+
+        new Recipee("a test recipee for all", "a delicious recipee for all", 
+        "https://www.andiemitchell.com/wp-content/uploads/2011/01/baked-buffalo-chicken-rolls-1-680x477.jpg", [new Ingredient("das", "dasda"), new Ingredient("adas", "123")]),
+
+        new Recipee("a new test recipee", "lorem ipsum", "https://www.andiemitchell.com/wp-content/uploads/2011/01/baked-buffalo-chicken-rolls-1-680x477.jpg", [new Ingredient('asdasd', '333'),
+        new Ingredient("adasd", "33")])
+      ];
+
+
+recipee-details.component.html
+------------------------------
+
+<div class="row">
+    <div class="col-md-4">
+      <ul class="list-group">
+          <!-- loop thru ingredients -->
+          <li class="list-group-item" *ngFor="let item of recipee.ingredients"> 
+              {{item.name}} - {{item.amount}}
+          </li>
+
+      </ul>
+    </div>
+</div>
+
+> loop thru ingredient and fetch name and amount,
+
+
+
+send the ingredient to shopping list
+--------------------------------
+
+ie. when clikcing on 'To Shopping List' dropdown
+
+we have to send ingredients to shoppingList
+
+recipee-details.compoenent.html
+-------------------------------
+<a (click)=onAddShoppingList() class="dropdown-item" href="#">To Shopping List </a>
+
+recipee.detail.component.ts
+------------------------------
+inject recipee servicehere,
+
+constructor(private recipeeService: RecipeeService){}
+
+onAddShoppingList(){
+	
+}
+
+recipee.service.ts
+------------------
+add new method here that has a ingredient type as parameter, 
+
+      // define a method of ingredienrt type.
+      
+onPassIngredientToShopList(ingredient: Ingredient[]){
+
+}
+
+recipee-details.compoenent.,ts
+---------------------------
+	  // below method fires on clickinf link
+
+onAddShoppingList(){
+
+	pass recipee.ingredients here to a method defined in recipee.service.ts
+
+    // invoke method of recipee service - pass ingredients as arguments to it
+   
+   this.recipeeService.onPassIngredientToShopList(this.recipee.ingredients); 
+}
+
+> next in recipee.service we have to access the shopping List service.
+
+ie we r injecting shoppinglist srvice to recipee service.
+
+add @Injectable() to recipee service.ts
+ befreo export class
+
+
+ recipee.service.ts
+ ---------------------
+
+   constructor(private shoppingService: ShoppingListService){}
+
+       onPassIngredientToShopList(ingredient: Ingredient[]){
+        this.shoppingService.ingredients
+      }
+
+      
+
+
+
+
+
+
+
+
+
+
