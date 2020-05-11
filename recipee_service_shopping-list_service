@@ -337,7 +337,27 @@ add @Injectable() to recipee service.ts
         this.shoppingService.ingredients
       }
 
+
+   shopping-list.service.ts
+   ---------------------------
+ingredientsChanged = new Ev
+
+   create a new method that receives ingredients
+
+   addIngredient(ingredient: Ingredient[]){
+   			// make a copy of array using spread and push it
+   			this.ingredient.push(...ingredients)
+   			this.ingredientsChanged.emit(this.ingredients.slice());
+   }
       
+
+   recipee.service.ts
+   --------------------
+
+        onPassIngredientToShopList(ingredient: Ingredient[]){
+        this.shoppingService.addIngredient(ingredient);
+      }
+
 
 
 
