@@ -120,5 +120,105 @@ ngOnInit(){
 
 
 
-Adding the shopping List selector
+Adding the shopping List service
 -----------------------------
+
+shopping-list.service.ts
+----------------------
+
+import { Injectable } from "@angular/core";
+import { Ingredient } from "../shared/ingredient.model";
+
+@Injectable() export class ShoppingListService{
+
+    // create an ingredients property of type Ingredient type
+    ingredients: Ingredient[]=[];
+
+    // define a method na dpass data
+    addingIngredients(getData: {name: string, amount: string}){
+        this.ingredients.push(new Ingredient(getData.name, getData.amount))
+    }
+    
+}   
+
+ shopping-list.component.ts
+ ------------------------
+
+// inject shoppingService instance
+constructor(private shoppingService: ShoppingListService) {}
+
+
+> remove onIngData() from shopping-list.component.ts
+> remove event binding from both templates
+
+add the following,
+
+  ngOnInit(): void {
+    this.ingredients = this.shoppingService.ingredients;
+  }
+
+
+shoppinf-list.componeent.ts
+----------------------------------
+
+@Component({
+  selector: 'app-shopping-list',
+  templateUrl: './shopping-list.component.html',
+  styleUrls: ['./shopping-list.component.css'],
+  providers: [ShoppingListService]
+})
+export class ShoppingListComponent implements OnInit {
+  
+    // create an ingredients array of type Ingredient class
+    ingredients: Ingredient[]=[];
+
+    // inject shoppingService instance
+    constructor(private shoppingService: ShoppingListService) {}
+
+  ngOnInit(): void {
+    this.ingredients = this.shoppingService.ingredients;
+  }
+
+}
+
+
+shopping-list-edit.component.ts
+----------------------------
+remove @output and emit(),
+
+
+inject the shoppingService service instance to contrsutpr
+
+  constructor(private shoppingService: ShoppingListService) { }
+
+    onAddIngredients(getIngName: HTMLInputElement, getIngAmount: HTMLInputElement){
+
+    this.shoppingService.addingIngredients({
+      name: getIngName.value,
+      amount: getIngAmount.value
+    })
+
+  }
+
+  onAddIngrediesnt is executd whuile button click,
+
+
+complete code 
+---------------------  
+export class ShoppingListEditComponent implements OnInit {
+
+  constructor(private shoppingService: ShoppingListService) { }
+
+  ngOnInit(): void {
+  }
+  onAddIngredients(getIngName: HTMLInputElement, getIngAmount: HTMLInputElement){
+
+    this.shoppingService.addingIngredients({
+      name: getIngName.value,
+      amount: getIngAmount.value
+    })
+
+  }
+}
+
+
