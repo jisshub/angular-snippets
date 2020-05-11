@@ -55,10 +55,11 @@ accounts.compoenent.ts
 here v listen to emited data in constructor using subscribe() method- 
 get status - alert it.
 
- constructor(private getService: LoggingServices, private accountService: AccountService) {
-       // listen the status emited by account-list-component.ts
-       this.accountService.statusUpdated.subscribe((status: string) => alert(`status is changed to ${status}`))
-   }
+constructor(private getService: LoggingServices, private accountService: AccountService) {
+   // listen the status emited by account-list-component.ts
+   this.accountService.statusUpdated.subscribe((status: string) => alert(`status is changed to ${status}`))
+}
+
 
 
 

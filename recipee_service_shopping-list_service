@@ -1,0 +1,124 @@
+recipee.service.ts
+------------------
+
+copy the recipeeList array of Recipee type from recipee-book.ts,
+
+import { Recipee } from '../recipee.model'
+
+export class RecipeeService{
+	
+
+recipeeList: Recipee[] = [
+    // instantiate Recipee class - pass arguments
+    new Recipee("a test recipee for all", "a delicious recipee for all", 
+    "https://www.andiemitchell.com/wp-content/uploads/2011/01/baked-buffalo-chicken-rolls-1-680x477.jpg"),
+    new Recipee("a test recipee for all", "a delicious recipee for all", 
+    "https://www.andiemitchell.com/wp-content/uploads/2011/01/baked-buffalo-chicken-rolls-1-680x477.jpg"),
+    new Recipee("a new test recipee", "lorem ipsum", "https://www.andiemitchell.com/wp-content/uploads/2011/01/baked-buffalo-chicken-rolls-1-680x477.jpg")
+  ];	
+
+  // now get the copy of recipeeList
+  getRecipee(){
+  	return this.recipeeList.slice();
+  }
+}
+
+
+> now add the recipee service in recipee.component.ts
+	
+
+recipee.component.ts
+-----------------
+providers = []
+
+
+so now it is accessible everywhere in the recipee component,
+
+recipee-book.compoentn.ts
+-------------------------
+
+recipee: Recipee[];
+
+inject an instance of RecipeeService that is added in recipee compoenent
+
+constructor(private recipeeService: RecipeeService){}
+
+define ngOnInit() and access the method of RecipeeService
+
+  // assign the array returned from recipee service to recipeeList propety defined  // here
+
+ngOnInit(){
+	this.recipee = this.recipeeService.getRecipee();
+}
+
+
+Thus v create a service for recipee and inject it to recipee compoenent
+to be accessibe across it's child components.
+
+
+Using service for cross component communication
+----------------------------------------
+
+recipee-item.compoenent.ts
+-------------
+
+> remove @Output() from recipee-item.compoenent.ts
+
+> remove emit() 
+
+> create a event emitetr object of type Recipee in recipee.service.ts
+
+recipee.serbice.ts
+--------------------
+
+recipeeSelected = new EvenEmiiter<Recipee>();
+
+
+recipee-item.component.ts
+--------------------
+> later inject recipee service instance of RecipeeService here, use construtor()
+
+> emit recipee element.
+
+@Input() recipeeEl: Recipee;
+
+onRecipeeData(){
+	this.recipeService.recipeeSelected.emit(recipeeEl)
+}
+
+
+remove onRecipeeSelected() from recipee-book.component.ts
+
+also remove from recipee.book.component.html where v binded it as event.
+
+also remove @Ouput() event emitetr from recipee.book.component.ts
+
+> remove from event binding from app-recipee-book selector from 		'recipee.component.html'
+
+
+> later inject recipeeService instance in recipee.component.ts
+
+
+constructor(private recipeeService: RecipeeService){
+	
+}
+
+
+> now listen the data emitted by recipee-item.compoenent
+
+> use suscribe - get recipee Emited - assign that recipee to selectedRecipee property
+
+ngOnInit(){
+	this.recipeeService.recipeeSelected.subscribe(
+		(recipee: Recipee)=> {
+			this.selectedRecipee = recipee
+		}
+
+	)
+}
+
+
+
+
+Adding the shopping List selector
+-----------------------------
