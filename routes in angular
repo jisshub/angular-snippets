@@ -1,0 +1,74 @@
+routes in angular
+--------------------
+
+revgister the aroutes
+---------------------
+app.modules.ts - always register the routes in App Module.
+
+App.Module.ts
+----------------
+import { Routes } from '@angular/core'
+
+
+// path in an arary of objects 
+const appRoute: Routes = [
+  // empty path loads to HomeCompoenent
+  {path: '', component: HomeComponent},
+  // users path loads to UsersCompoennt
+  {path: 'users', component: UsersComponent},
+  {path: 'servers', component: ServersComponent}
+]
+
+sp when user naviagtes 'users' path, some action need to happen like any compoenent should b loaded. so for that specfy component  to get loaded when navigates to users path.
+
+so now v set all path, but need to do more for working
+
+how angular know these routes.
+
+for that v add 'RouterModule' to the import list in app.module.ts
+
+next have to regisetr it,
+
+RouterMOdule has a method called forRoot() thaT registers our routes with the angular.
+
+> pass the appRoute constant to the forRoot(),
+
+> RouterModule.forRoot(appRoute)
+
+so now angular know this appRoute. but, angular doeant know where rto dispaly comaponent in app.component.html based on naviagtions .
+
+app.compoenent,html
+----------------------
+we add a angular directive in html, 
+	
+	<router-outlet></router-outlet>
+
+
+this directive marks the place in which the compoenent to be shown according to the routes user navigates to.
+
+so that compoenent's view will be shown in the place we specify the router-outlet directive
+
+for eg: if naovgate to 'users', then UsersCompoenent is shown in router-outlet directive's place.
+
+
+eg:
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <router-outlet></router-outlet>
+    </div>
+  </div> 
+
+based on routes we navigates to, directive get replaced by the various compoenents.
+
+
+
+
+
+
+
+
+
+
+
+
