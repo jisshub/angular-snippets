@@ -66,6 +66,67 @@ based on routes we navigates to, directive get replaced by the various compoenen
 
 
 
+Naivhating with router links
+----------------------------
+
+now the issues is we hasve to type each path in he addres bar to navigate to routes
+
+so here wwe may add the lnks like below,
+
+aplp.component.html
+-----------------
+<li role="presentation" class="active"><a href="/">Home</a></li>
+<li role="presentation"><a href="/servers">Servers</a></li>
+<li role="presentation"><a href="/users">Users</a></li>
+
+so here v provide the path to href attibutes.
+
+but the problem when v navigatet from one to another, page refreshes. and all data in prevous is lost. 
+
+note:
+
+when v click a link that request is sent to the server. and serves gives the response.
+so insuch page reloads to give the response.
+
+but it is not the good behavour of out app . since it always reloads our app
+while naviagtions.
+
+we can solve it by usng a special directive called 'routerLink'
+
+and pass the route to this link.
+
+<li role="presentation" class="active"><a routerLink='/'>Home</a></li>
+<li role="presentation"><a routerLink='/servers'>Servers</a></li>
+
+// can also set routerLink as proerty binding. and pass the route in an array
+// if direcvlty given, it notworks since property binding expects a property
+
+// to oercome it we set the path in array.
+<li role="presentation"><a [routerLink]=['users/']>Users</a></li>
+
+
+so tjis routerLink catches the click on links - prevent default behaviour of webpage to reload - and directs the user to link clicked without any page reload.
+
+
+understanding navigation paths
+---------------------------------
+servers.component.html 
+-------------------
+
+<!-- navigate to users page from current page - set relative path routerLink -->
+
+<a [routerLink]="['/users']" routerLinkActive="router-link-active">Reload to Users</a>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
