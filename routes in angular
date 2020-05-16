@@ -27,7 +27,7 @@ how angular know these routes.
 
 for that v add 'RouterModule' to the import list in app.module.ts
 
-next have to regisetr it,
+next have to regisetr the routes with angular app,
 
 RouterMOdule has a method called forRoot() thaT registers our routes with the angular.
 
@@ -116,6 +116,19 @@ servers.component.html
 <!-- navigate to users page from current page - set relative path routerLink -->
 
 <a [routerLink]="['/users']" routerLinkActive="router-link-active">Reload to Users</a>
+
+
+
+> routerLinkActive directive
+---------------------------------
+This directive lets you add a CSS class to an element when the link's route becomes active.
+
+<a routerLink="/user/bob" routerLinkActive="active-link">Bob</a>
+
+When the url is either '/user' or '/user/bob', the active-link class will be added to the a tag. If the url changes, the class will be removed.
+
+
+
 
 
 
