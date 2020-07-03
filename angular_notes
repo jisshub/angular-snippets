@@ -1,5 +1,9 @@
 install angular cli
 > npm install -g @angular/cli
+
+check angular version
+>ng version
+
 creaye new project
 > ng new my-first-app
 > cd my-first-app
