@@ -133,7 +133,15 @@ ngOnInit() {
         // alert a message
         alert(error.message);
       },
-      // subscribe to handle complete, no nedd of any parameters since no args r passed after complete()be() on subscription object
+      // subscribe to handle complete, no nedd of any parameters since no args r passed after complete()
+      () => {
+        console.log("Completed!");
+      }
+    );
+  }
+  ngOnDestroy() {
+    // here v unsubsribe the observable, ie stops the execution while moving to another component
+    // invoke unsubscribe() on subscription object
     this.firstSubscription.unsubscribe();
   }
 }
@@ -143,14 +151,6 @@ ngOnInit() {
 - We rarely built cusomt observables
 - in ibservable we wrap some events, ajaxrequest, which gives asome data, errors, or complete that events, request. later v subsribe that observable to handle the emitted data, errors..
 
-      () => {
-        console.log("Completed!");
-      }
-    );
-  }
-  ngOnDestroy() {
-    // here v unsubsribe the observable, ie stops the execution while moving to another component
-    // invoke unsubscri
 
 # Operators
 
@@ -158,7 +158,4 @@ ngOnInit() {
 	
 	
 		
-
-
-
 
