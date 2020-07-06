@@ -138,5 +138,93 @@ onSubmit(form: NgForm) {
 
 ---
 
+## Acesing the form using @ViewChild
 
 
+**app.compoenent.ts**
+```typescript
+// use @viewchid to access the form object - pass localreference as first argument - set type as NgForm
+
+@ViewChild("form1", { static: true }) signupForm: NgForm;
+
+onSubmit(){
+	// log the form object
+ console.log(this.signupForm)
+}
+```
+
+## Adding validation to check user Inputs
+
+```html
+<input
+type="text"
+id="username"
+class="form-control"
+ngModel
+name="username"
+required
+/>
+
+<input
+type="email"
+id="email"
+class="form-control"
+ngModel
+name="email"
+required
+email
+/>
+
+<select
+id="secret"
+class="form-control"
+ngModel
+name="secret"
+required
+>
+
+```
+
+- Here v add *required* attribute to the input element.
+- if username input not given, form is invalid
+- also add *email* directive in email control.
+- so if inputted email is not in correct format, then form is invalid.
+
+--- 
+
+## Using the Form state
+
+**app.component.html**
+```html
+        <button class="btn btn-primary" type="submit" [disabled]="!form1.valid">
+```
+
+- here v disable the button if form is not valid.
+- use disabled property - set a condition checking form valid/not.
+
+- when some required inputs are not given or inputted value is not in correct format. then some ng css classes are added to that element.
+
+eg: ng-invalid, ng-dirty, ng-touched
+
+- we can make use of this classes to style form when it is invalid.
+
+**app.component.css**
+
+```css
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+```
+- here v add a border to the input when it is invalid.
+- ng-touched means we touched that input element but value not added.
+
+---
+
+
+
+
+
+
+
+
+	
