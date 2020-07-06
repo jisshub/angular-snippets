@@ -1,0 +1,48 @@
+# emitting events across components
+
+- Suppose user component has a button when v click that, we have to show some contents in app component
+
+1. create a service.ts file in user component
+
+```bash
+ng g s user/ --skipTests=true
+```
+
+2. add an event emitter in user.service which returns a boolean.
+
+```typescript
+  activateEmitter = new EventEmitter<boolean>();
+```
+
+3. Inject this service on user component.
+
+4. add new method - invoke userservice injected- call emitter - emit a true value.
+
+```typescript
+  
+  // inject user srvice to user component.
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {}
+  
+  // add new method
+  onActivate() {
+    // invoke userservice - call emitter - emit true
+    this.userService.activateEmitter.emit(true);
+  }
+
+```
+
+5. In user component view, add a click listener to button
+
+```html
+<button class="btn btn-primary" (click)="onActivate()">Activated</button>
+
+```
+
+
+
+
+
+
