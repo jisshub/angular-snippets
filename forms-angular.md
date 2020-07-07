@@ -445,7 +445,42 @@ defaultGender: string = this.genders[0];
 
 ---
 
+## Patching Form Values
 
+- use, *patchValue()* method on form.
+
+- *patchValue()* used to override a parts of the form.
+
+
+**app.component.ts**
+
+```typescript
+suggestUserName() {
+
+    const suggestedName = "Superuser";
+
+    // access form using name that set in @Viewchild - get form object - invoke patchValue - get userData - assign suggestedName to username
+    
+    this.signupForm.form.patchValue({
+    	// get userData
+      userData: {
+      	// set suggestedName property to username.
+        username: suggestedName,
+      },
+    });
+  }
+```
+**app.component.html**
+```html
+<button
+class="btn btn-default"
+type="button"
+(click)="suggestUserName()"
+>
+```
+- Here clicking on button, suggest a value for username input control.
+
+---
 
 
 
