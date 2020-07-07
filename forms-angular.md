@@ -20,8 +20,8 @@
 - here v defien the form structure in typescript code. also set up the html code for form - finally connect both mannualy.
 ---
 
-## Template Driven approach
-### Creating the form - Registering controls
+# Template Driven approach
+## Creating the form - Registering controls
 
 - import the formsModule from angular/forms
 
@@ -70,7 +70,7 @@
 ```
 ---
 
-### Submitting the Form 
+## Submitting the Form 
 
 - we use ngSubmit directive in the form element.
 - ngSubmit fires a submit event only when the form is submitted.
@@ -340,6 +340,110 @@ eg: [(ngModel)]="property"
 
 ---
 
+## Grouping Form controls
+
+- we can group different controls together.
+
+- use ngModelGroup directive
+
+- set a name to this directive as a string.
+
+- here both the controls were wrapped in to a single div element so we group them.
+
+**app.component.html**
+
+```html
+<div id="user-data" ngModelGroup="userData">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      class="form-control"
+      ngModel
+      name="username"
+      required
+      #username="ngModel"
+    />
+    <span
+      class="text-primary"
+      *ngIf="!username.valid && username.touched"
+      >Please add username</span
+    >
+  </div>
+  <button class="btn btn-default" type="button">
+    Suggest an Username
+  </button>
+  <div class="form-group">
+    <label for="email">Mail</label>
+    <input
+      id="email"
+      class="form-control"
+      ngModel
+      name="email"
+      required
+      email
+      #email="ngModel"
+    />
+    <!-- this text appears only if email is inavlid and touched -->
+    <span class="text-primary" *ngIf="email.invalid && email.touched"
+      >Please add an email</span
+    >
+  </div>
+</div>
+```
+
+- After grouping, v gets a single key: value pair of username and email in value property of form object.
+
+**Screenshot**
+
+![image](./screenshots/Screenshot from 2020-07-07 13-13-02.png 'image')
+
+---
+
+## Handling Radio Buttons
+
+- first we set an array of genders in app.component.ts
+
+**app.component.ts**
+
+```typescript
+genders: string[] = ["male", "female"];
+// set a defaultGender property
+defaultGender: string = this.genders[0];
+```
+
+- later create a radio button in html
+
+**app.component.html**
+
+```html
+<label for="gender">Select Gender: </label>
+<div class="form-check" *ngFor="let gender of genders">
+  <input
+    class="form-check-input"
+    type="radio"
+    name="gender"
+    id="gender"
+    [ngModel]="defaultGender"
+    [value]="gender"
+  />
+
+  <label for="gender" class="form-check-label">{{ gender }}</label>
+</div>
+
+```
+- using ngFor, loop thru each data in *genders* array
+
+- for each element, div is repeated.
+
+- we set one way binding on ngModel to set a default value once component loads.
+
+- one way binding on value attribute.
+
+- we specify *gender* in label.
+
+---
 
 
 
