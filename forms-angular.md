@@ -484,6 +484,68 @@ type="button"
 
 ## Using Form Data
 
+- here once form is submitted all entered value need to be populated below the form.
+
+- first have to define poperties of user in app.component - set each property as null at begining.
+
+
+- set submitted property to false initially, ie only  populate the values once form is submitte, else not show that.
+
+- on onSubmit() which is executed at submit, change assign the user entered value in the form to each propertieds in user object.
+
+**app.component.ts**
+```typescript
+// set user properties
+  user = {
+    username: "",
+    email: "",
+    secret: "",
+    sports: "",
+    answer: "",
+    reply: "",
+  };
+  
+   // set form submit ptoperty to false,
+  submitted: boolean = false;
+  
+    onSubmit() {
+    this.submitted = true;
+    // get each value from form object - assign each to propetty in user object
+    this.user.username = this.signupForm.value.userData.username;
+    this.user.email = this.signupForm.value.userData.email;
+    this.user.secret = this.signupForm.value.secret;
+    this.user.sports = this.signupForm.value.sports;
+    this.user.answer = this.signupForm.value.textData.answer;
+    this.user.reply = this.signupForm.value.textData.reply;
+    console.log(this.signupForm);
+  }
+```
+
+- in app.comoponent template
+
+**app.component.html**
+
+```html
+<div id="formData" class="mt-3 border" *ngIf="submitted">
+<h1 class="display-6">User Details</h1>
+<!-- get each property from user object -->
+
+<p>username: {{ user.username }}</p>
+<p>email: {{ user.email }}</p>
+<p>secret quesiton: {{ user.secret }}</p>
+<p>Favourite sport: {{ user.sports }}</p>
+<p>answer 1: {{ user.answer }}</p>
+<p>answer 2: {{ user.reply }}</p>
+
+</div>
+
+```
+- here v get access to those user properties defined in the app compoenent and populate each value of properies.
+
+
+
+
+
 
 
 
