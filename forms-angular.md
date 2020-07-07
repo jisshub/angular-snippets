@@ -196,6 +196,7 @@ required
 
 **app.component.html**
 ```html
+ <!-- valid is a property of form object -->
         <button class="btn btn-primary" type="submit" [disabled]="!form1.valid">
 ```
 
@@ -219,6 +220,133 @@ input.ng-invalid.ng-touched {
 - ng-touched means we touched that input element but value not added.
 
 ---
+
+## Outputting Validation Error Messages
+
+- to access the control created automatically by angular,
+- add a local reference to that control - set ngModel directive to that reeference as string 
+- use that local refereence in the element we need the access.
+
+**app.component.html**
+
+```html
+<div class="form-group">
+            <label for="email">Mail</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              ngModel
+              name="email"
+              required
+              email
+              #email="ngModel"
+            />
+            <!-- this text appears only if email is inavlid and touched -->
+            <span class="text-primary" *ngIf="email.invalid && email.touched"
+              >Please add an email</span
+            >
+          </div>
+
+```
+- here v set a local reference in email control 
+- used that reference in span element for condition checking.
+
+## set default value with ngModel using property binding
+
+
+- We want to set a default value to select element when component is initialized.
+
+- for that v do property binding on ngModel and set a property to it
+
+- that property is defined in app.component
+
+**app.component.html**
+
+```html
+
+<select
+id="secret"
+class="form-control"
+[ngModel]="defaultSecretVal"
+name="secret"
+required
+#secret="ngModel"
+>
+<option value="pet">Your firs`t Pet?</option>
+<option value="teacher">Your first teacher?</option>
+</select>
+```
+
+- here v set *[ngModel]="defaultSecretVal"* in select element
+
+- define this *defaultSecretVal* property in app.component.ts
+
+**app.compoenent.ts**
+
+```typescript
+defaultSecretVal: string = "pet"
+```
+- *pet* value attribute of option tag
+
+---
+
+
+## Using ngModel with 2 way binding
+
+- we have to instantly show value that is being entered.
+ 
+- use two way binding on ngModel.
+
+- set property to ngModel
+
+**app.component.html**
+
+```html
+<div class="form-group">
+  <textarea
+    name="message"
+    id="message"
+    cols="100"
+    rows="3"
+    [(ngModel)]="answer"
+  ></textarea>
+  <p>
+    Your Answer is: <span class="text-danger">{{ answer }}</span>
+  </p>
+</div>
+```
+
+- here entered answer is shown in below paragraph whie it is being entered 
+
+- later set answer property in app component
+**app.component.ts**
+
+```typescript
+answer = ''
+```
+---
+
+### summary of diiferent bindings
+
+1. no binding - to tell angular the input is a control
+eg: <input ngModel>
+
+2. one way binding - to set a default value to input
+eg: [ngModel]="property"
+
+3. two way binding -to show value while it is being entered.
+eg: [(ngModel)]="property"
+
+---
+
+
+
+
+
+
+
+
 
 
 
