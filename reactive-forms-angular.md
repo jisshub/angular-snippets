@@ -96,7 +96,103 @@ imports: [BrowserModule, ReactiveFormsModule]
 ```	
 ---
 
-##  
+## Submitting the form
+
+- add ngSubmit directive and assign it with method
+
+- this methid is execute while form is submitted.
+
+**app.component.html**
+
+```html
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+```
+
+**app.component.ts**
+```typescript
+onSubmit(){
+
+// access the form.
+console.log(this.signupForm);
+}
+		
+```
+- here in this apprach no need to use local reference for form access in app.component.ts, since here form is initiazlied in app.component.ts itself.
+
+---
+
+## Adding Validation
+
+- Unlike template driven approach where v add the validations in template, here  v add validators as an argument of FormControl. here v r configuring validators in typescript code not in template.
+
+**app.component.ts**
+
+```typescript
+ngOnInit() {
+this.signupForm = new FormGroup({
+username: new FormControl(null, Validators.required),
+email: new FormControl(null, [Validators.required, Validators.email]),
+gender: new FormControl(this.genders[0]),
+});
+}
+
+```
+- add Validators.required as argument here
+
+- can also give the validators in array.
+
+--- 
+
+## Accessing the controls from html template.
+
+- when v want to show some error message when input v entered is invalid/not in correct format.
+
+**app.component.html**
+
+```html
+<div class="form-group">
+  <label for="username">Username</label>
+  <input
+    formControlName="username"
+    type="text"
+    id="username"
+    class="form-control"
+    name="username"
+  />
+  <small
+    class="text-primary"
+    *ngIf="
+      signupForm.get('username').invalid &&
+      signupForm.get('username').touched
+    "
+    >please add a username</small
+  >
+</div>
+
+```
+- here v first access form - call get() - pass controls as string - check whether is invalid/not.
+- here, form is *signupForm*
+- here, controls is *username*
+
+- here this invalid, touched etc .. are properties of *FormGroup* object. in case of *template driven* it is a property of *NgForm*
+
+- can also use this to style form when it is not valid.
+
+**app.component.css**
+
+```css
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+```
+---
+
+
+
+
+
+
 
 
 
