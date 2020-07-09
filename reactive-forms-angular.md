@@ -188,6 +188,68 @@ input.ng-invalid.ng-touched {
 ```
 ---
 
+## Grouping controls
+
+- not working
+
+-Check the documenatation.
+
+![Grouping control](https://angular.io/guide/reactive-forms#grouping-form-controls)
+
+---
+
+## Arrays of Form Controls
+
+- Adding controls to an array
+
+- add a control called *hobbies* in to FormGroup which is of type *FormArray*.
+
+- so when v click on a button, v add an input control to hobbies array.
+
+- next we have to sync this array in app component with html code.
+
+- Add a directive called *formArrayName* to that elements div.
+
+- assign hobbies control to it.
+
+- next loop thru that array - also get the index of each.
+
+- later add formControlName directive to the input - assign index i as a property binding to that directive.
+
+
+**app.component.ts**
+```typescript
+ngOnInit() {
+this.signupForm = new FormGroup({
+username: new FormControl("", Validators.required),
+email: new FormControl("", [Validators.required, Validators.email]),
+phone: new FormControl("", Validators.required),
+
+gender: new FormControl(this.genders[0]),
+hobbies: new FormArray([]),
+});
+}
+	
+```
+
+**app.component.html**
+```html
+<div formArrayName="hobbies">
+  <h1 class="display-5">Hobbies</h1>
+  <button class="btn btn-default" type="button" (click)="onAddHobby()">Add Hobby</button>
+
+  <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index">
+
+    <input type="text" name="hobby" id="hobby" [formControlName]="i" class="form-control">
+
+  </div>
+</div>
+
+```
+- here v do the property bindingon formControlName directive since v r assigning an index to it, not a control.
+
+---
+
 
 
 
