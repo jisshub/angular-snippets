@@ -204,6 +204,8 @@ input.ng-invalid.ng-touched {
 
 - add a control called *hobbies* in to FormGroup which is of type *FormArray*.
 
+- add a method in app compoenent, where v push the controls to the hobbies.
+
 - so when v click on a button, v add an input control to hobbies array.
 
 - next we have to sync this array in app component with html code.
