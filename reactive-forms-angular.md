@@ -241,7 +241,7 @@ hobbies: new FormArray([]),
   <h1 class="display-5">Hobbies</h1>
   <button class="btn btn-default" type="button" (click)="onAddHobby()">Add Hobby</button>
 
-  <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index">
+  <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies')['controls']; let i = index">
 
     <input type="text" name="hobby" id="hobby" [formControlName]="i" class="form-control">
 
