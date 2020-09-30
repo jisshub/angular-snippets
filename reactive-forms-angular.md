@@ -6,7 +6,7 @@
 
 - set a property in app component which holds the form.
 
-- property is of type FormGroup imported angular/forms 
+- property is of type FormGroup imported angular/forms
 
 - for reactive approach to work, ie, when v connect the progarmmatically created form wwith html code - v have to import ReactiveForms module in app.module.ts
 
@@ -15,15 +15,16 @@
 **app.component.ts**
 
 ```typescript
-  signupForm: FormGroup;
-
+signupForm: FormGroup;
 ```
+
 **app.module.ts**
 
 ```typescript
-import { ReactiveFormsModule } from "@angular/forms";
-imports: [BrowserModule, ReactiveFormsModule]
+import { ReactiveFormsModule } from '@angular/forms';
+imports: [BrowserModule, ReactiveFormsModule];
 ```
+
 ---
 
 ## Creating a basic form in app component
@@ -40,8 +41,8 @@ imports: [BrowserModule, ReactiveFormsModule]
 
 - FormControl() - 3 args - initial formstate and 2 validators.
 
-
 **app.component,ts**
+
 ```typscript
   signupForm: FormGroup;
 
@@ -54,22 +55,22 @@ imports: [BrowserModule, ReactiveFormsModule]
     });
   }
 ```
+
 - thus we initialize a basic form.
 
 ---
 
-
 ## Sync html form and typescript form
 
-- add a directive *formGroup* to form element in html
+- add a directive _formGroup_ to form element in html
 
-- pass *signupForm* property as a property binding to the *formGroup* directive
+- pass _signupForm_ property as a property binding to the _formGroup_ directive
 
 - thus v sync both html form and form initialized in app.component.ts
 
 - next v have to sync controls specified in the typescript form with the correct inputs in the html form. ie what controls connect to what inputs.
 
-- for this v add *formControlName* directive to each inputs in html form and pass the control related to that directive.
+- for this v add _formControlName_ directive to each inputs in html form and pass the control related to that directive.
 
 - thus v sync controls in typescript form with inputs in html form.
 
@@ -86,14 +87,20 @@ imports: [BrowserModule, ReactiveFormsModule]
 **app.component.html**
 
 ```html
-
 <form [formGroup]="signupForm">
-<div class="form-group">
-  <label for="username">Username</label>
-  <input formControlName="username" type="text" id="username" class="form-control" name="username">
-</div>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input
+      formControlName="username"
+      type="text"
+      id="username"
+      class="form-control"
+      name="username"
+    />
+  </div>
+</form>
+```
 
-```	
 ---
 
 ## Submitting the form
@@ -105,25 +112,27 @@ imports: [BrowserModule, ReactiveFormsModule]
 **app.component.html**
 
 ```html
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()"></form>
 ```
 
 **app.component.ts**
+
 ```typescript
 onSubmit(){
 
 // access the form.
 console.log(this.signupForm);
 }
-		
+
 ```
+
 - here in this apprach no need to use local reference for form access in app.component.ts, since here form is initiazlied in app.component.ts itself.
 
 ---
 
 ## Adding Validation
 
-- Unlike template driven approach where v add the validations in template, here  v add validators as an argument of FormControl. here v r configuring validators in typescript code not in template.
+- Unlike template driven approach where v add the validations in template, here v add validators as an argument of FormControl. here v r configuring validators in typescript code not in template.
 
 **app.component.ts**
 
@@ -137,11 +146,12 @@ gender: new FormControl(this.genders[0]),
 }
 
 ```
+
 - add Validators.required as argument here
 
 - can also give the validators in array.
 
---- 
+---
 
 ## Accessing the controls from html template.
 
@@ -168,14 +178,14 @@ gender: new FormControl(this.genders[0]),
     >please add a username</small
   >
 </div>
-
 ```
+
 - get() method allows us to access he controls easily.
 - here v first access form - call get() - pass controls as string - check whether is invalid/not.
-- here, form is *signupForm*
-- here, controls is *username*
+- here, form is _signupForm_
+- here, controls is _username_
 
-- here this invalid, touched etc .. are properties of *FormGroup* object. in case of *template driven* it is a property of *NgForm*
+- here this invalid, touched etc .. are properties of _FormGroup_ object. in case of _template driven_ it is a property of _NgForm_
 
 - can also use this to style form when it is not valid.
 
@@ -185,8 +195,8 @@ gender: new FormControl(this.genders[0]),
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
-
 ```
+
 ---
 
 ## Grouping controls
@@ -203,7 +213,7 @@ input.ng-invalid.ng-touched {
 
 - Adding controls to an array
 
-- add a control called *hobbies* in to FormGroup which is of type *FormArray*.
+- add a control called _hobbies_ in to FormGroup which is of type _FormArray_.
 
 - add a method in app compoenent, where v push the controls to the hobbies.
 
@@ -211,7 +221,7 @@ input.ng-invalid.ng-touched {
 
 - next we have to sync this array in app component with html code.
 
-- Add a directive called *formArrayName* to that elements div.
+- Add a directive called _formArrayName_ to that elements div.
 
 - assign hobbies control to it.
 
@@ -219,8 +229,8 @@ input.ng-invalid.ng-touched {
 
 - later add formControlName directive to the input - assign index i as a property binding to that directive.
 
-
 **app.component.ts**
+
 ```typescript
 ngOnInit() {
 this.signupForm = new FormGroup({
@@ -232,39 +242,120 @@ gender: new FormControl(this.genders[0]),
 hobbies: new FormArray([]),
 });
 }
-	
+
 ```
 
 **app.component.html**
+
 ```html
 <div formArrayName="hobbies">
   <h1 class="display-5">Hobbies</h1>
-  <button class="btn btn-default" type="button" (click)="onAddHobby()">Add Hobby</button>
+  <button class="btn btn-default" type="button" (click)="onAddHobby()">
+    Add Hobby
+  </button>
 
-  <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies')['controls']; let i = index">
-
-    <input type="text" name="hobby" id="hobby" [formControlName]="i" class="form-control">
-
+  <div
+    class="form-group"
+    *ngFor="let hobbyControl of signupForm.get('hobbies')['controls']; let i = index"
+  >
+    <input
+      type="text"
+      name="hobby"
+      id="hobby"
+      [formControlName]="i"
+      class="form-control"
+    />
   </div>
 </div>
-
 ```
+
 - here v do the property bindingon formControlName directive since v r assigning an index to it, not a control.
 
 ---
 
+## reactive forms - custom validators
 
+- ie adding our own validators-
+- for instance v want to forbid users from using some usernames. in this case, we add a property called _forbiddennames_
 
+```typescript
+forbiddennames = ['chris', 'annah'];
+```
 
+- next add a validator function named _forbiddenNames_
+- validator gets an argument of type _FormControl_.
+- also it should return a js object.
+- where key is a string, value is a boolean.
 
+```typescript
+forbiddenNames(control: FormControl): any{}
+```
 
+- next check whether any item in _forbiddenNames_ array are present in argument received. it returns -1 if value not present. -1 interpret as _true_. so we have to check this is not equal to -1. returns valid if value not present, else invalid.
+- if names matches, return an object {},
+- else return null
 
+```typescript
+if (this.forbiddenName.indexOf(control.value) !== -1) {
+  return { forbiddenName: true };
+} else {
+  return null;
+}
+```
 
+- next pass forbiddenNames custom validator to username form control.
 
+```typescript
+ngOnInit() {
+    this.signUpForm = new FormGroup({
+      username: new FormControl(null, [
+        Validators.required,
+        this.forbiddenNames,
+      ]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      phone: new FormControl(null, Validators.required),
+      gender: new FormControl(this.genders[0]),
+      hobbies: new FormArray([]),
+    });
+  }
+```
 
+- next after it raises error,
 
+  > core.js:4197 ERROR TypeError: Cannot read property 'forbiddenName' of undefined
 
+- to solve it attach **bind()** to **this.forbiddenNames** which present in ngOnInit. and it is called by angular when doing validation. at that time, _this_ not refer to our class. to work this, attach _bind(this)_ to **this.forbiddenNames**.
 
+```typescript
+username: new FormControl(null, [
+  Validators.required,
+  this.forbiddenNames.bind(this),
+]);
+```
 
+---
 
+## using error codes.
 
+```html
+<small
+  class="text-danger"
+  *ngIf="
+              signUpForm.get('username').invalid &&
+              signUpForm.get('username').touched
+            "
+>
+  <small
+    class="text-danger"
+    *ngIf="signUpForm.get('username').errors['nameIsForbidden']"
+  >
+    The username is not invalid
+  </small>
+  <small
+    class="text-danger"
+    *ngIf="signUpForm.get('username').errors['required']"
+  >
+    username is required
+  </small>
+</small>
+```
