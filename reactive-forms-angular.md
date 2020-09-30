@@ -359,3 +359,30 @@ username: new FormControl(null, [
   </small>
 </small>
 ```
+
+## creating a custom async validator
+
+- using asynchronous validators
+
+### creating asynchronous validator
+
+```typescript
+// asynchronous method
+forbiddenLocation(valueRec: FormControl): any {
+  const promise = new Promise<any>((resolve, reject) => {
+    setTimeout(() => {
+      if (valueRec.value === 'kochi') {
+        resolve({ locationIsForbidden: true });
+      } else {
+        resolve(null);
+      }
+    }, 1500);
+  });
+  // finally return the promise
+  return promise;
+}
+```
+
+- next add asynchronous validator on ngOnIt() method.
+
+---
