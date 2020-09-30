@@ -170,6 +170,7 @@ gender: new FormControl(this.genders[0]),
 </div>
 
 ```
+- get() method allows us to access he controls easily.
 - here v first access form - call get() - pass controls as string - check whether is invalid/not.
 - here, form is *signupForm*
 - here, controls is *username*
