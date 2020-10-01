@@ -385,4 +385,65 @@ forbiddenLocation(valueRec: FormControl): any {
 
 - next add asynchronous validator on ngOnIt() method.
 
+```typescript
+location: new FormControl(null, [Validators.required], this.forbiddenLocation);
+```
+
+---
+
+## reacting to status and value changes
+
+- using valueChanges and statusChanges observables.
+  - valueChanges fired whenever v make changes in form.
+  - statusChanges fires whenever form status changes(INVALID, PENDING, VALID).
+
+**app.component.ts**
+
+```typescript
+// using valueChanges observable
+this.signUpForm.valueChanges.subscribe((value) => {
+  console.log(value);
+});
+
+// using statusChange observable
+this.signUpForm.statusChanges.subscribe((value) => {
+  console.log(value);
+});
+```
+
+---
+
+## Setting and patching values
+
+- use setValue() for pre-populating the field when page loads.
+- use patchValue() to update a part of the form.
+- reset form after submit.
+
+**app.component.ts**
+
+```typescript
+ngOnInit() {
+  // setValue
+  this.signUpForm.setValue({
+    username: 'max',
+    email: 'jose@gmail.com',
+    phone: 2342342342,
+    location: 'london',
+    gender: 'male',
+    hobbies: [],
+  });
+
+  // patchValue()
+  this.signUpForm.patchValue({
+    username: 'lee',
+    email: 'lee@gmail.com',
+  });
+}
+// form submit - form reset after
+  onSubmit(): void {
+    console.log(this.signUpForm);
+    this.signUpForm.reset();
+  }
+```
+
 ---
