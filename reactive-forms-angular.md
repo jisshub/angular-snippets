@@ -2,7 +2,7 @@
 
 ## Set up
 
-- Forms are created programmtically
+- Forms are created programatically
 
 - set a property in app component which holds the form.
 
@@ -31,7 +31,7 @@ imports: [BrowserModule, ReactiveFormsModule];
 
 - Initialize form in ngOnInIt()
 
-- set property signupForm with new FormGroup().
+- set property signUpForm with new FormGroup().
 
 - FormGroup() takes a js object
 
