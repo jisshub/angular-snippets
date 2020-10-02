@@ -113,3 +113,40 @@ projectName: new FormControl(null, [
   CustomValidator.invalidProjectName,
 ]);
 ```
+
+> using async validator
+
+**customvalidator.ts**
+
+```typescript
+  static asyncInvalidProjectName(
+    control: FormControl
+  ): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'Sample') {
+          resolve({ invalidProjectName: true });
+        } else {
+          resolve(null);
+        }
+      }, 1500);
+    });
+    return promise;
+  }
+```
+
+- then access this validator in app.component.ts
+
+**app.component.ts**
+
+```typescript
+projectName: new FormControl(
+  null,
+  [Validators.required, CustomValidator.invalidProjectName],
+  CustomValidator.asyncInvalidProjectName
+);
+```
+
+- so here basically, if project name is _Test_ or _Sample_ , it shows ng-invalid
+
+---
