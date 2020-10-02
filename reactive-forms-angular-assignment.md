@@ -19,7 +19,7 @@ statusArray: string[] = ['stable', 'critical', 'finished'];
 ```
 
 - next synchronize typescript form with html form.
-- connect each inputs with corresponding controls in typescript form.
+- connect each inputs with corresponding controls in typescript form using _formControlName_ directive
 - add **ngSubmit** directive to submit form.
 
   **app.component.html**
@@ -28,12 +28,12 @@ statusArray: string[] = ['stable', 'critical', 'finished'];
 <form
   [formGroup]="projectDetailsForm"
   class="pb-5 mb-5"
-  (ngSubmit)="onSubmit()"
+  (ngSubmit)="onSaveProject()"
 >
   <div class="form-group">
     <label for="name">Project Name: </label>
     <input
-      formControlName="name"
+      formControlName="projectName"
       type="text"
       name="name"
       class="form-control"
@@ -60,7 +60,7 @@ statusArray: string[] = ['stable', 'critical', 'finished'];
       <select
         class="custom-select mr-sm-2"
         id="inlineFormCustomSelect"
-        formControlName="status"
+        formControlName="projectStatus"
       >
         <option></option>
       </select>
@@ -69,4 +69,47 @@ statusArray: string[] = ['stable', 'critical', 'finished'];
 
   <button class="btn btn-success" type="submit">Submit</button>
 </form>
+```
+
+> create _onSaveProject()_ function in app.component.ts
+> and print the value.
+
+**app.component.ts**
+
+```typescript
+ onSaveProject() {
+    console.log(this.projectDetailsForm.value);
+  }
+```
+
+- adding custom validator that doesn't allow project name as **Test**.
+-
+- create a new file called _customvalidator.ts_
+- create a _CustomValidator_ class. create a static method in it.
+
+**customvalidator.ts**
+
+```typescript
+export class CustomValidator {
+  // define a static method - so can call it
+  // without instantiating the class.
+  static invalidProjectName(control: FormControl): any {
+    // if value received is Test
+    if (control.value === 'Test') {
+      return { invalidProjectName: true };
+    }
+    return null;
+  }
+}
+```
+
+- later call this static method in app.component.ts
+
+**app.component.ts**
+
+```typescript
+projectName: new FormControl(null, [
+  Validators.required,
+  CustomValidator.invalidProjectName,
+]);
 ```
