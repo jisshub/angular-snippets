@@ -24,10 +24,6 @@ username: string = 'max';
 
 ---
 
-## using pipes
-
-- pipes include _uppercase_, _date_.
-
 ## adding parameters to pipe
 
 - configuring pipe by adding parameters to it.
@@ -91,6 +87,7 @@ export class ShortenPipe implements PipeTransform {
 
 ```typescript
   @Pipe({ name: "shorten" })
+  export class ShortenPipe implements PipeTransform {
 ```
 
 - later use this _shorten_ pipe on template
@@ -114,16 +111,19 @@ export class ShortenPipe implements PipeTransform {
 2. add transform method.
 
 ```typescript
-    // define transform method - receives a value to be transformed
-   transform(value: any) {
-   // if length of value > 10 characters
-   if (value.length > 10) {
-   // shorten the value
-   return value.substr(0, 10) + "...";
-   }
-   // if not, return original value
+@Pipe({ name: 'shorten' })
+export class ShortenPipe implements PipeTransform {
+  // define transform method - receives a value to be transformed
+  transform(value: any) {
+    //   if length of value > 10 characters
+    if (value.length > 10) {
+      // shorten the value
+      return value.substr(0, 10) + '...';
+    }
+    // if not return original value
     return value;
-   }
+  }
+}
 ```
 
 3. add pipe to declarations array in app.module.ts file
@@ -133,4 +133,3 @@ declarations: [AppComponent, ShortenPipe];
 ```
 
 ---
-
