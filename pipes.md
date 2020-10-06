@@ -48,7 +48,7 @@ username: string = 'max';
 ```
 
 - here the _date pipe_ is applied first, then the _uppercase pipe_ is applied to the result of _date pipe_.
-- order is relay important, if not maintained , it causes error.
+- order is really important, if not maintained , it causes error.
 
 ---
 
@@ -131,5 +131,113 @@ export class ShortenPipe implements PipeTransform {
 ```typescript
 declarations: [AppComponent, ShortenPipe];
 ```
+
+---
+
+## parametrizing a custom pipe
+
+- adding parameters to pipe.
+- suppose we want user to give a value as a parameter to the pipe.
+- we have to set an argument in _transform_ method to accept this value.
+
+**app.component.html**
+
+```html
+<strong>{{ server.name | shorten: 15 }}</strong>
+```
+
+- here v set a parameter 15 to the pipe _shorten_
+  **app.component.ts**
+
+```typescript
+transform(value: any, limit: number) {
+    //   if length of value > 10 characters
+    if (value.length > limit) {
+      // shorten the value
+      return value.substr(0, limit) + "...";
+    }
+    // if not return original value
+    return value;
+  }
+```
+
+- here v set _limit_ as argument that receives the parameter from pipe.
+
+---
+
+## creating a filter pipe
+
+> filter through the server by status _stable_.
+> ie. get only servers with stable status.
+
+- create an input field that takes filtering value.
+
+- using ngModel. allocate a property named _filteredStatus_
+
+- declare the _filteredStatus_ in app component
+
+**app.component.html**
+
+```html
+<input
+  type="text"
+  name="filter-status"
+  id="filter-status"
+  [(ngModel)]="filteredStatus"
+/>
+```
+
+**app.component.ts**
+
+```typescript
+
+export class AppComponent {
+  filteredStatus = "";
+```
+
+- next create a pipe using cli
+
+```bash
+ng g pipe filter
+```
+
+**filter.pipe.ts**
+
+```typescript
+  // give arguments to get entered input and server status
+  transform(value: any, filteredString: string, status: string): any {
+    // if field input is empty
+    if (value.length === 0 || filteredString === "") {
+      // display all servers
+      return value;
+    }
+    // define an array to final results
+    const resultantArray: Array<string> = [];
+    // loop thru each item in value array
+    for (const item of value) {
+      // check entered value matches current item's status property
+      if (item[status] === filteredString) {
+        // push the matching item to the resultant array
+        resultantArray.push(item);
+      }
+    }
+    // final return back resultant array
+    return resultantArray;
+  }
+```
+
+**app.component.html**
+
+```html
+<li
+  class="list-group-item"
+  *ngFor="let server of servers | filter: filteredStatus:'status'"
+  [ngClass]="getStatusClasses(server)"
+></li>
+```
+
+- give _filter_ pipe - set parameters _filteredStatus_ and _server status_(string)
+
+- make sure filter pipe is added to declarations array in app module.
 
 ---
