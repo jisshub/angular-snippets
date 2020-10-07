@@ -288,3 +288,6 @@ export class AppComponent {
 
 - reverse a string using pipe. - reverse pipe
 - sorting the list by server name - sort pipe
+
+---
+
