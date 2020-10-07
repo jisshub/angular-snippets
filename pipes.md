@@ -238,6 +238,53 @@ ng g pipe filter
 
 - give _filter_ pipe - set parameters _filteredStatus_ and _server status_(string)
 
-- make sure filter pipe is added to declarations array in app module.
+- make sure filter pipe is added to _declarations_ array in app module.
 
 ---
+
+## pure and impure pipes
+
+whenever v make change data on the page, the pipe is recalculated. this might lead to performance issues.
+but we can force the pipe to be updated whenever changes happens, it is done by adding a second parameter called
+pure to pipe decorator. and set value as false.
+
+**filter.pipe.ts**
+
+```typescript
+@Pipe({
+  name: "filter",
+  pure: false,
+})
+```
+
+---
+
+## Understanding the async pipe
+
+- create a new property in app component.
+
+```typescript
+export class AppComponent {
+  appStatus = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("stable");
+    }, 200);
+  });
+```
+
+- here _appStatus_ is set to stable only after 2 secs.
+- next we have to output this in our template.
+- so here v use a built-in pipe called _async_.
+
+```html
+<h3>App Status: {{ appStatus | async}}</h3>
+```
+
+- so here after 2 secs, _appStatus_ is set to _stable_
+
+- async pipe recognizes the promise and after specified time, promise is resolved and data is printed to the template.
+
+## Assignment
+
+- reverse a string using pipe. - reverse pipe
+- sorting the list by server name - sort pipe
