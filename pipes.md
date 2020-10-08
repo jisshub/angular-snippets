@@ -289,5 +289,47 @@ export class AppComponent {
 - reverse a string using pipe. - reverse pipe
 - sorting the list by server name - sort pipe
 
----
+## solution to the above
 
+**reverse.pipe.ts**
+
+```typescript
+
+transform(value: any): any {
+    return value.split("").reverse().join("");
+  }
+```
+
+**sort.pipe.ts**
+
+```typescript
+transform(value: any, name: string): any {
+    return value.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
+  }
+```
+
+**app.component.ts**
+
+```typescript
+nameToRev: string = 'server';
+```
+
+**app.component.html**
+
+```html
+<h1 class="display-4">name: {{ nameToRev | reverse }}</h1>
+
+<li
+  class="list-group-item"
+  *ngFor="
+            let server of servers
+              | filter: filteredStatus:'status'
+              | sort: 'name'
+          "
+  [ngClass]="getStatusClasses(server)"
+></li>
+```
+
+---
