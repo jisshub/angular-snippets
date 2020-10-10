@@ -36,6 +36,91 @@
 
 - in app module import _httpclient_ module from _angular/common/http_.
 - add it to imports array.
-- in app component, inject httpclientmodule to constructor.
+
+**app.module.ts**
+
+```typescript
+import { HttpClientModule } from '@angular/common/http';
+imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule];
+```
+
+- in app component, inject _httpclientmodule_ to constructor.
+
+**app.component.ts**
+
+```typescript
+  constructor(private http: HttpClient) {}
+
+```
+
+> note: in firebase , there is starting url, and then we add the endpoints. this endpoints are replicated as folders in the database. here v r not directly communicating with the db. v r communicating with rest api provided by firebase. firebase translate our endpoints to folder structure and store it in the database. **NEVER COMMUNICATING WITH DB FROM OUR ANGULAR APP**.
+
+```typescript
+this.http.post('https://test-angular-fire-project.firebaseio.com/posts.json');
+```
+
+- v have to give _json extension_ since it is _firebase requirement_.
+
+here _posts.json_ is the endpoint, remaining are starting url, so folder structure is _posts_.
+
+- next pass request body as second argument.
+
+```typescript
+ onCreatePost(postData: { title: string; content: string }) {
+    // Send Http request
+    this.http.post("https://test-angular-fire-project.firebaseio.com/posts.json", postData)
+    console.log(postData);
+  }
+```
+
+- next v have to **subscribe** to this post method to send the request and to get the response, since _post_ returns an observable and not any response object, but to get response from post request, v have to **subscribe** to the post method. calling _subsribe()_ on _post_ sends the request and gives the actual response data.
+
+**app.component.ts**
+
+```typescript
+onCreatePost(postData: { title: string; content: string }) {
+    // Send Http request
+    this.http.post("https://test-angular-fire-project.firebaseio.com/posts.json", postData)
+    .subscribe(responseData => {
+     console.log(responseData);
+    })
+  }
+
+```
+
+- _subscribe_ to post method -> get the response.
+- also request r only sent when v _subscribe_ to it.
+
+### response in firebase
+
+![response in firebase](./screenshots/image-3.jpg 'image')
+
+---
+
+## getting the data
+
+- get the data.
+
+**app.component.ts**
+
+```typescript
+// create a private method to fetch the posts
+  private fetchPosts() {
+       this.http.get("https://test-angular-fire-project.firebaseio.com/posts.json").subscribe(posts => {
+         console.log(posts);
+       })
+  }
+```
+
+- like post, call _subscribe_ to send the request and get the response back.
+
+- next call this private method,
+
+```typescript
+  onFetchPosts() {
+    // Send Http request
+    this.fetchPosts();
+  }
+```
 
 ---
