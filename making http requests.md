@@ -124,3 +124,37 @@ onCreatePost(postData: { title: string; content: string }) {
 ```
 
 ---
+
+## using rxjs to transform response data
+
+- here v call _pipe()_ on request method before subscribing it.
+- here v use rxjs operator called _map_ operator. import it from _rxjs/operator_
+- map operator allows to get some data & return new data that automatically rewrapped  
+  into an observable. thus we can subscribe it again. if not observable we cant subscribe the data.
+
+**app.component.ts**
+
+```typescript
+  this.http.get("https://test-angular-fire-project.firebaseio.com/posts.json")
+       .pipe(map(data =>{
+          // converting js object to array of objects.
+          // first initialize an empty array
+          const postsArray: Array<Object> = [];
+          // loop each object in data
+          for (const key in data) {
+            // push each item as new object to empty array
+            postsArray.push({...data[key], id: key})
+          }
+          return postsArray;
+       }))
+       .subscribe(posts => {
+         console.log(posts);
+       })
+  }
+```
+
+> here v call _pipe_ on get method. inside _pipe_ we call _map_ operator as first argument which allows
+> to transform the current data to new form. here v transform from js object to an array of object.
+> finally return the mapped data. then call _subscribe_ on the mapped data. log that final data.
+
+---
