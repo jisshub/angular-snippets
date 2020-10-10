@@ -34,3 +34,8 @@
 
 ## sending a post request
 
+- in app module import _httpclient_ module from _angular/common/http_.
+- add it to imports array.
+- in app component, inject httpclientmodule to constructor.
+
+---
