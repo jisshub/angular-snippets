@@ -158,3 +158,74 @@ onCreatePost(postData: { title: string; content: string }) {
 > finally return the mapped data. then call _subscribe_ on the mapped data. log that final data.
 
 ---
+
+## Using types with Http Client
+
+- here v add type to the array.
+- first create a model.ts file for post
+
+- to create it from cli,
+
+```bash
+ng generate class name --type=model
+```
+
+**post.model.ts**
+
+```typescript
+export class Post {
+  constructor(public title: string, public content: string, public id: string) {
+    this.title = title;
+    this.content = content;
+    this.id = id;
+  }
+}
+```
+
+- use this **Post** class as type.
+
+**app.component.ts**
+
+```typescript
+const postsArray: Post[] = [];
+```
+
+---
+
+## outputting posts
+
+- initialize a empty array with type Post.
+- assign mapped posts to that array while subscribing.
+
+  **app.component.ts**
+
+```typescript
+
+loadedPosts: Post[]= [];
+
+.subscribe(posts => {
+  this.loadedPosts = posts;
+
+})
+```
+
+- later output the data in front end
+
+- first check any data is there.
+- if yes, loop thru it.
+- finally, print the _title_ and _content_
+  **app.component.html**
+
+```html
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+  <p *ngIf="loadedPosts.length < 1">No posts available!</p>
+  <ul class="list-group mt-3" *ngIf="loadedPosts.length >= 1">
+    <li class="list-group-item" *ngFor="let post of loadedPosts">
+      <h1 class="display-5">{{post.title}}</h1>
+      <p class="lead">{{post.content}}</p>
+    </li>
+  </ul>
+</div>
+```
+
+---
