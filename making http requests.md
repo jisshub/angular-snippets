@@ -363,3 +363,88 @@ CreateAndStorePost(postData: Post){
 ```
 
 ---
+
+## handling errors
+
+- initialize an error property in app component.
+- define a new function to process error.
+
+```typescript
+   error = null;
+
+  ngOnInit() {
+    this.postService.FetchPosts().subscribe(posts => {
+      console.log(posts);
+      // assign posts to empty array loadedPosts
+      this.loadedPosts = posts;
+    }, error => {
+      this.error = error.message;
+      console.log(error);
+
+    });
+  }
+```
+
+- render the error in template
+
+**app.component.html**
+
+```html
+<div *ngIf="error" class="alert alert-danger mt-3">
+  <h2>An Error Occurred</h2>
+  <p>{{error}}</p>
+</div>
+```
+
+---
+
+## using Subjects in handling error.
+
+> we use this method when v send the request and don't subscribe to it in our component.
+
+> in such case we uses _Subject_ to handle the errors.
+
+> create an instance for _Subject_ in post service.
+
+> add a function to process error as argument in _CreateAndStorePost_
+
+> **post.service.ts**
+
+```typescript
+
+  // instance for Subject
+  errObject = new Subject<string>();
+  constructor(private http: HttpClient) { }
+
+  CreateAndStorePost(postData: Post){
+    this.http.post("https://test-angular-fire-project.firebaseio.com/posts.json", postData)
+    .subscribe(responseData => {
+       console.log(responseData);
+    }, error => {
+        this.errObject.next(error.message);
+    })
+  }
+
+```
+
+- declare a property with type as _Subscription_
+- subscribe to errObject property and store to errSub property. for that access the post service.
+
+- finally unsubscribe from error, use _ngOnDestroy_ .
+
+- **app.component.ts**
+
+```typescript
+  private errSub: Subscription
+  ngOnInit() {
+    //  subscribe to errObject property and store to errSub property
+    this.errSub = this.postService.errObject.subscribe(errMsg => {
+        this.error = errMsg;
+    })
+  ngOnDestroy(){
+    // unsubscribe
+    this.errSub.unsubscribe();
+  }
+```
+
+---
