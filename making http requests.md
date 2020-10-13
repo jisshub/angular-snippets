@@ -285,7 +285,7 @@ CreateAndStorePost(postData: Post){
   }
 ```
 
-- similar strategy for *fetching post* as well.
+- similar strategy for _fetching post_ as well.
 
 **post.service.ts**
 
@@ -315,6 +315,50 @@ CreateAndStorePost(postData: Post){
 ```typescript
   onFetchPosts() {
     this.postService.FetchPosts();
+  }
+```
+
+> but the **problem** here is, we cant view the posts fetched on our template. to solve this, we have to call _subscribe_ method in our _app component_. and not in post service.
+
+**app.component.ts**
+
+```typescript
+  onFetchPosts() {
+    this.postService.FetchPosts().subscribe(posts => {
+      console.log(posts);
+      this.loadedPosts = posts;
+    });
+  }
+```
+
+- here v call _subscribe_ on _FetchPosts_ method accessed from _PostService_. later assigned mapped data to the empty array _loadedPosts_.
+
+---
+
+## sending a DELETE request
+
+- delete all posts by sending deleting request.
+
+**post.service.ts**
+
+```typescript
+  // delete posts
+  DeletePosts(){
+    return this.http.delete("https://test-angular-fire-project.firebaseio.com/posts.json")
+  }
+```
+
+- later subscribe to the returned data in app component.
+
+**app.component.ts**
+
+```typescript
+
+  onClearPosts() {
+    // subscribe here, clear the loadedPosts array.
+    this.postService.DeletePosts().subscribe(() => {
+        this.loadedPosts= [];
+    })
   }
 ```
 
