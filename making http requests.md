@@ -229,3 +229,93 @@ loadedPosts: Post[]= [];
 ```
 
 ---
+
+## using service for http requests
+
+- create service using cli
+
+```bash
+ng g s post --skipTests=true
+```
+
+- first inject this _PostService_ to the _app component constructor_
+
+**app.component.ts**
+
+```typescript
+  constructor(private http: HttpClient, private postService: PostService) {}
+
+```
+
+- in post service, v does **POST and GET** request - store the response data.
+
+- inject http to this service.
+
+**post.service.ts**
+
+```typescript
+  constructor(private http: HttpClient) { }
+
+```
+
+- create a function to do post request and store response data.
+
+**post.service.ts**
+
+```typescript
+CreateAndStorePost(postData: Post){
+    this.http.post("https://test-angular-fire-project.firebaseio.com/posts.json", postData)
+    .subscribe(responseData => {
+      console.log(responseData);
+
+    })
+  }
+```
+
+- then in app component file, call this post service.
+
+**app.component.ts**
+
+```typescript
+
+  onCreatePost(postData: Post) {
+    // Send Http request
+    // call CreateAndStorePost from PostService.
+    this.postService.CreateAndStorePost(postData);
+  }
+```
+
+- similar strategy for *fetching post* as well.
+
+**post.service.ts**
+
+```typescript
+ FetchPosts(){
+    this.http.get("https://test-angular-fire-project.firebaseio.com/posts.json")
+    .pipe(map(data => {
+        const dataArray: Array<Object> = [];
+        for (const key in data) {
+          console.log(key);
+
+          console.log(data[key]);
+
+          dataArray.push({...data[key], id: key})
+        }
+        return dataArray;
+    }))
+    .subscribe(mappedData => {
+      console.log(mappedData);
+
+    })
+  }
+```
+
+**app.component.ts**
+
+```typescript
+  onFetchPosts() {
+    this.postService.FetchPosts();
+  }
+```
+
+---
