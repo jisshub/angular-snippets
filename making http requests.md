@@ -35,6 +35,7 @@
 ## sending a post request
 
 - in app module import _httpclient_ module from _angular/common/http_.
+- also import *FormsModule* from *angular/forms*
 - add it to imports array.
 
 **app.module.ts**
