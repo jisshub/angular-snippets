@@ -525,3 +525,5 @@ this.http.get('https://test-angular-fire-project.firebaseio.com/posts.json', {
 ![image](./screenshots/image-4.jpg 'image')
 
 ---
+
+## observing different types of responses.
