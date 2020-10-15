@@ -35,7 +35,7 @@
 ## sending a post request
 
 - in app module import _httpclient_ module from _angular/common/http_.
-- also import *FormsModule* from *angular/forms*
+- also import _FormsModule_ from _angular/forms_
 - add it to imports array.
 
 **app.module.ts**
@@ -449,3 +449,44 @@ CreateAndStorePost(postData: Post){
 ```
 
 ---
+
+## using catchError operator
+
+> import _catchError_ from rxjs operators.
+> used when v try to transform the response data using _pipe_.
+> in order to throw error caught by _catchError_, use _throwError_ that imported from _rxjs_.
+> so _catchError_ followed by _throwError_.
+
+**app.component.ts**
+
+```typescript
+FetchPosts(){
+    return this.http.get("https://test-angular-fire-project.firebaseio.com/posts.json")
+    .pipe(map(data => {
+        const dataArray: Array<Object> = [];
+        for (const key in data) {
+          dataArray.push({...data[key], id: key})
+        }
+        return dataArray;
+    }),
+    catchError(errRes => {
+      return throwError(errRes);
+    }));
+  }
+```
+
+---
+
+## setting headers
+
+- setting headers for request methods as an argument.
+
+```typescript
+this.http.get('https://test-angular-fire-project.firebaseio.com/posts.json', {
+  headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+});
+```
+
+- constructs a new http header with the given values.
+
+
