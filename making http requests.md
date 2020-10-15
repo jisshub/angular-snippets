@@ -490,3 +490,38 @@ this.http.get('https://test-angular-fire-project.firebaseio.com/posts.json', {
 ```
 
 ---
+
+## setting query params in request method
+
+> set params with _HttpParams_ method.
+> params passed as argument to _set method_
+
+```typescript
+this.http.get('https://test-angular-fire-project.firebaseio.com/posts.json', {
+  headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+  params: new HttpParams().set('print', 'pretty'),
+});
+```
+
+![image](./screenshots/image-34.jpg 'image')
+
+> can have multiple params in the query
+
+```typescript
+
+ FetchPosts(){
+    // create an object for HttpParams
+    let searchParams = new HttpParams();
+    // append params to that object.
+    searchParams = searchParams.append("print", "pretty");
+    // can append multiple params as well
+    searchParams = searchParams.append("custom", "key");
+    // previous params wont be replaced. new ones will be added along with the previous
+    return this.http.get("https://test-angular-fire-project.firebaseio.com/posts.json", {headers: new HttpHeaders({"Custom-Header": "Hello"}),
+      params: searchParams}
+     )
+```
+
+![image](./screenshots/image-4.jpg 'image')
+
+---
