@@ -481,12 +481,12 @@ FetchPosts(){
 
 - setting headers for request methods as an argument.
 
+- constructs a new http header with the given values.
+
 ```typescript
 this.http.get('https://test-angular-fire-project.firebaseio.com/posts.json', {
   headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
 });
 ```
 
-- constructs a new http header with the given values.
-
-
+---
